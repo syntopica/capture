@@ -1,0 +1,11 @@
+# Next.js standalone output traces dependencies through a real node_modules
+# tree. With pnpm's default symlinked layout, transitive dependencies such as
+# @swc/helpers are not copied into .next/standalone and the deployed bundle
+# crashes on boot. Learned on the sibling cPanel app on the same server.
+nodeLinker: hoisted
+
+# This service serves JSON and never an image, so sharp is dead weight rather
+# than a dependency worth compiling. Declared explicitly so pnpm reports a
+# decision instead of an ignored build script.
+allowBuilds:
+  sharp: false
