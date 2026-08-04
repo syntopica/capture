@@ -30,19 +30,47 @@ cp -r .next/standalone "$OUT"
 mkdir -p "$OUT/.next"
 cp -r .next/static "$OUT/.next/static"
 
-# The dependencies are installed on server-a, not shipped from here. Next.js file
-# tracing copies whatever this machine resolved, and packages with prebuilt
-# native binaries then arrive built for the wrong platform.
-echo "==> Dropping the traced node_modules; server-a installs its own"
-rm -rf "${OUT:?}/node_modules"
+# This bundle ships its own node_modules, which is the opposite of what the
+# sibling app on the same server does, and the reason is worth stating because
+# copying its script without this note would be wrong in both directions.
+#
+# That app strips the traced tree because Next.js file tracing copies whatever
+# THIS machine resolved, and a package with a prebuilt native binary then
+# arrives built for the wrong platform - its macOS `sharp` reached production
+# and every image was silently served unoptimised behind a 200.
+#
+# Here there is no native code to get wrong: this service answers JSON, the
+# image optimiser is off (see next.config.ts) so `sharp` is not pulled in, and
+# `mysql2` and `ulid` are compiled into the server chunks rather than required
+# from disk. Shipping the traced tree then means production runs the exact bytes
+# that were built and tested here.
+#
+# It also sidesteps a real constraint on the server: server-a's pnpm enforces a
+# `minimumReleaseAge` supply-chain policy and refuses a lockfile resolved the
+# same day. Installing there would mean either waiting or relaxing that policy
+# on a machine that carries client data, and neither is a good trade for a
+# dependency tree with nothing platform-specific in it.
+echo "==> Checking the bundle carries no native binaries"
+if [ -n "$(find "$OUT/node_modules" -name '*.node' -print -quit 2>/dev/null)" ]; then
+  echo "ERROR: the traced node_modules contains a compiled binary:" >&2
+  find "$OUT/node_modules" -name '*.node' >&2
+  echo >&2
+  echo "It was built for $(uname -s)/$(uname -m); the server is Linux/x86_64." >&2
+  echo "Either drop the dependency that pulls it in, or go back to installing" >&2
+  echo "on the server and mind the supply-chain policy there." >&2
+  exit 1
+fi
+
+# The lockfiles travel so the server can still reproduce the tree if it ever
+# has to, even though nothing installs there today.
 cp pnpm-lock.yaml pnpm-workspace.yaml "$OUT/"
 
 echo "==> Done"
 du -sh "$OUT"
 echo
-echo "Upload the contents of cpanel-build/ to the cPanel Node application root,"
-echo "then install the dependencies there with pnpm."
-echo "Startup file: server.js"
+echo "Deploy with:"
+echo "  rsync -az --delete --exclude '.env' -e 'ssh -p 6922' \\"
+echo "    cpanel-build/ <host>:<app-home>/apps/capture-service/"
 echo
-echo "The .env on server-a is NOT in this bundle and must survive the upload:"
-echo "  rsync --delete --exclude '.env' ..."
+echo "The .env on server-a is NOT in this bundle and must survive the upload."
+echo "Startup file: server.js"
