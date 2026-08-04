@@ -1,3 +1,5 @@
+import type { CaptureState } from './CaptureState'
+
 /** One row of the inbox, as the drain reads it. */
 export type Capture = {
   captureId: string
@@ -6,4 +8,7 @@ export type Capture = {
   captureSource: string
   capturedAt: string
   drainedAt: string | null
+  state: CaptureState
+  stateAt: string | null
+  clipDir: string | null
 }

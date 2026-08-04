@@ -11,7 +11,8 @@ export const findCaptureByUrl = async (
   url: string,
 ): Promise<Capture | null> => {
   const [rows] = await capturePool().query<RowDataPacket[]>(
-    `SELECT capture_id, url, note, capture_source, captured_at, drained_at
+    `SELECT capture_id, url, note, capture_source, captured_at, drained_at,
+              state, state_at, clip_dir
        FROM captures WHERE normalized_url = ?`,
     [normalizeUrl(url)],
   )
