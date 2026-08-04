@@ -1,0 +1,20 @@
+# Mirrors createLefthookConfig() in @busirocket/quality-config/lefthook.
+#
+# The pre-push secret scan matters more here than in most repos: this service
+# authenticates with a capture token and connects to MySQL with a password, and
+# both live in a .env that is deliberately not tracked. gitleaks is the check
+# that the arrangement holds.
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: '*.{js,jsx,ts,tsx,mjs,cjs}'
+      run: pnpm exec eslint --max-warnings 0 --no-warn-ignored {staged_files}
+    format:
+      glob: '*.{js,jsx,ts,tsx,mjs,cjs,json,md,css,yml,yaml}'
+      run: pnpm exec prettier --check {staged_files}
+
+pre-push:
+  commands:
+    secrets:
+      run: gitleaks detect --no-banner --redact

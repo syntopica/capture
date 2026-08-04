@@ -9,7 +9,9 @@ import { jsonOk } from '@/utils/http/jsonOk'
 export const POST = async (request: Request): Promise<Response> => {
   if (!(await authorizeRequest(request)))
     return jsonError('UNAUTHORIZED', 'invalid capture token', 401)
-  const body = await request.json().catch(() => null)
+  // `Response.json()` is typed `any`; narrowing here is what lets
+  // parseCaptureInput take `unknown` and do the validating.
+  const body: unknown = await request.json().catch(() => null)
   const parsed = parseCaptureInput(body)
   if ('error' in parsed) return jsonError('INVALID_CAPTURE', parsed.error, 400)
   const recorded = await recordCapture(parsed.input)

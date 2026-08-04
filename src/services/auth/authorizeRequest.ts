@@ -1,4 +1,4 @@
-import { capturePool } from '@/services/db/capturePool'
+import { capturePool } from '@/db/capturePool'
 import type { RowDataPacket } from 'mysql2/promise'
 import { createHash } from 'node:crypto'
 
@@ -20,6 +20,13 @@ import { createHash } from 'node:crypto'
 export const authorizeRequest = async (request: Request): Promise<boolean> => {
   const header = request.headers.get('authorization') ?? ''
   const token = header.startsWith('Bearer ') ? header.slice(7).trim() : ''
+  /* An empty-string check leaks whether a token was sent, not what it was. The
+   * comparison that touches the secret is the primary-key lookup below, which is
+   * constant work whatever the token is: no candidate list to walk, no early
+   * exit to time. The directive has to sit on its own line immediately above the
+   * statement - a multi-line `//` explanation between them makes
+   * `disable-next-line` apply to the next comment instead of to the code. */
+  // eslint-disable-next-line security/detect-possible-timing-attacks
   if (token === '') return false
   const digest = createHash('sha256').update(token).digest('hex')
   const [rows] = await capturePool().query<RowDataPacket[]>(

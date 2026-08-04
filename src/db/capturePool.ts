@@ -1,5 +1,6 @@
 import type { Pool } from 'mysql2/promise'
 import mysql from 'mysql2/promise'
+import { capturePoolRef } from './capturePoolRef'
 
 /** The MySQL pool, created once per process and reused.
  *
@@ -24,11 +25,9 @@ import mysql from 'mysql2/promise'
  * hand would have worked and would have been the wrong fix: cPanel owns those
  * grants and re-syncs them. Connecting over the socket keeps the convention
  * cPanel maintains. */
-let pool: Pool | null = null
-
 export const capturePool = (): Pool => {
   const socketPath = process.env.DB_SOCKET ?? ''
-  pool ??= mysql.createPool({
+  capturePoolRef.current ??= mysql.createPool({
     ...(socketPath === ''
       ? {
           host: process.env.DB_HOST ?? '127.0.0.1',
@@ -41,5 +40,5 @@ export const capturePool = (): Pool => {
     connectionLimit: 4,
     charset: 'utf8mb4',
   })
-  return pool
+  return capturePoolRef.current
 }

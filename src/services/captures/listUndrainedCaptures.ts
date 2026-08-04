@@ -1,6 +1,7 @@
-import { capturePool } from '@/services/db/capturePool'
+import { capturePool } from '@/db/capturePool'
 import type { Capture } from '@/types/captures/Capture'
 import type { RowDataPacket } from 'mysql2/promise'
+import { captureFromRow } from './captureFromRow'
 
 /** Everything the drain has not taken yet, oldest first.
  *
@@ -19,12 +20,5 @@ export const listUndrainedCaptures = async (
        LIMIT ?`,
     [limit],
   )
-  return rows.map((row) => ({
-    captureId: String(row.capture_id),
-    url: String(row.url),
-    note: row.note === null ? null : String(row.note),
-    captureSource: String(row.capture_source),
-    capturedAt: String(row.captured_at),
-    drainedAt: row.drained_at === null ? null : String(row.drained_at),
-  }))
+  return rows.map(captureFromRow)
 }

@@ -1,4 +1,4 @@
-import { capturePool } from '@/services/db/capturePool'
+import { capturePool } from '@/db/capturePool'
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { recordCapture } from './recordCapture'
 

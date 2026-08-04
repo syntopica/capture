@@ -1,4 +1,4 @@
-import { capturePool } from '@/services/db/capturePool'
+import { capturePool } from '@/db/capturePool'
 
 /** Mark one capture as taken out of the inbox. Returns whether a row matched,
  * so the route can answer 404 for an id that does not exist rather than
