@@ -1,7 +1,8 @@
 # capture-service
 
-The URL inbox for the phone. It records URLs and answers whether a URL is
-already recorded. That is the whole service.
+The URL inbox for the phone. It records URLs, answers whether a URL is already
+recorded, and repeats how far the clip for it got. That is the whole service -
+it never decides that last answer, it is told.
 
 Design: `~/p/brain/docs/superpowers/specs/2026-08-04-capture-service-design.md`.
 
@@ -44,7 +45,7 @@ curl -X POST https://<host>/api/capture \
 Responses are `{ data }` on success and `{ error: { code, message } }` on
 failure.
 
-### Two behaviours worth knowing before reading the code
+### Three behaviours worth knowing before reading the code
 
 **A malformed URL is refused, not repaired.** Both captures the old GitHub lane
 produced carry `url: Imagen\nhttps://…` - a Shortcuts variable label leaked into
