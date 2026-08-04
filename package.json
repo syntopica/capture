@@ -1,0 +1,37 @@
+{
+  "name": "brain-capture",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "start:standalone": "node .next/standalone/server.js",
+    "build:cpanel": "bash scripts/build-cpanel.sh",
+    "type-check": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "format": "prettier --write . --list-different",
+    "format:check": "prettier --check .",
+    "check": "pnpm type-check && pnpm format:check && pnpm test"
+  },
+  "dependencies": {
+    "mysql2": "^3.23.2",
+    "next": "16.2.11",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "ulid": "^3.0.2"
+  },
+  "devDependencies": {
+    "@busirocket/prettier-config": "^0.1.1",
+    "@types/node": "^26",
+    "@types/react": "^19",
+    "prettier": "^3.7.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  }
+}
