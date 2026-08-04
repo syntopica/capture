@@ -43,3 +43,43 @@ describe('normalizeUrl', () => {
     expect(normalizeUrl(url)).toBe(url)
   })
 })
+
+/** The 2026-08-04 exception, and its own cross-language contract: these cases
+ * must give the same answers as `IDENTITY_QUERY_PARAMS` in the Python. */
+describe('identity-bearing query parameters', () => {
+  it('keeps the video id on a YouTube watch url', () => {
+    expect(normalizeUrl('https://www.youtube.com/watch?v=zmrPY6S1FwY')).toBe(
+      'https://www.youtube.com/watch?v=zmrPY6S1FwY',
+    )
+  })
+
+  it('keeps two videos apart, which was the defect', () => {
+    expect(normalizeUrl('https://www.youtube.com/watch?v=aaa')).not.toBe(
+      normalizeUrl('https://www.youtube.com/watch?v=bbb'),
+    )
+  })
+
+  it('preserves the id case, since video ids are case-sensitive', () => {
+    expect(normalizeUrl('https://www.youtube.com/watch?v=AbC')).toBe(
+      'https://www.youtube.com/watch?v=AbC',
+    )
+  })
+
+  it('still drops tracking parameters beside the identity', () => {
+    expect(
+      normalizeUrl('https://www.youtube.com/watch?v=abc&t=42&si=xyz'),
+    ).toBe('https://www.youtube.com/watch?v=abc')
+  })
+
+  it('falls back to the base when the identity parameter is absent', () => {
+    expect(normalizeUrl('https://m.youtube.com/watch?list=PL123')).toBe(
+      'https://m.youtube.com/watch',
+    )
+  })
+
+  it('leaves youtu.be alone, which carries the id in the path', () => {
+    expect(normalizeUrl('https://youtu.be/zmrPY6S1FwY')).toBe(
+      'https://youtu.be/zmrpy6s1fwy',
+    )
+  })
+})
