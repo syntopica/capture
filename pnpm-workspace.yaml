@@ -6,6 +6,22 @@ nodeLinker: hoisted
 
 # This service serves JSON and never an image, so sharp is dead weight rather
 # than a dependency worth compiling. Declared explicitly so pnpm reports a
-# decision instead of an ignored build script.
+# decision instead of an ignored build script. next.config.ts also excludes it
+# from output tracing, and build-cpanel.sh fails if any native binary survives.
 allowBuilds:
   sharp: false
+
+# Neither of these reaches production - the deployed bundle contains only
+# @next, @swc, client-only, next, react, react-dom and styled-jsx, and this
+# service processes no CSS and serves no image. They are pinned anyway, because
+# leaving known-vulnerable versions in the tree trains everyone to scroll past
+# the alerts that do matter.
+#
+# postcss: four advisories, three high, all arbitrary .map file disclosure via
+# an attacker-controlled sourceMappingURL. It arrives twice - 8.4.31 pinned
+# inside next, and 8.5.25 through the prettier CSS-order plugin and vite.
+# sharp: inherited libvips CVEs. Excluded from the bundle already; pinned so the
+# lockfile does not carry a vulnerable copy at all.
+overrides:
+  postcss: '>=8.5.23'
+  sharp: '>=0.35.0'
