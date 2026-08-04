@@ -20,11 +20,21 @@ CREATE TABLE IF NOT EXISTS captures (
   -- Sent by the client with its own UTC offset intact. A phone captures in
   -- local time and the offset is information about where it happened.
   captured_at    VARCHAR(40)  NOT NULL,
-  -- Set when `clips` has taken the URL out of the inbox. It means exactly that
-  -- and never "a page was written": synthesis state lives in the clip's own
-  -- derived state and in the ledger, and an inbox that learns to answer it
-  -- becomes a second ledger that will disagree with the first.
+  -- Set when `clips` has taken the URL out of the inbox, and nothing more. How
+  -- far the clip then got is `state` below, which is a separate question: this
+  -- column is what makes a half-finished drain re-runnable, and folding the two
+  -- together would lose that.
   drained_at     DATETIME         NULL,
+  -- How far the clip got. Received, never derived: the ledger under
+  -- brain/.ingest/clips/ decides and the Mac pushes here after that ledger is on
+  -- origin/main, so this column repeats an answer rather than forming one. A
+  -- browser extension reads it per tab to colour its toolbar icon, which is the
+  -- need that reversed the earlier rule against the inbox knowing it.
+  -- SPEC: ~/p/brain/docs/superpowers/specs/2026-08-04-clip-state-in-the-browser-design.md
+  state          VARCHAR(16)  NOT NULL DEFAULT 'captured',
+  state_at       DATETIME         NULL,
+  -- clips/processed/2026/07/<dir>, so a client can link to the clip it names.
+  clip_dir       TEXT             NULL,
   created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY captures_capture_id (capture_id),
   KEY captures_drained_at (drained_at)

@@ -14,7 +14,8 @@ export const listUndrainedCaptures = async (
   limit: number,
 ): Promise<Capture[]> => {
   const [rows] = await capturePool().query<RowDataPacket[]>(
-    `SELECT capture_id, url, note, capture_source, captured_at, drained_at
+    `SELECT capture_id, url, note, capture_source, captured_at, drained_at,
+              state, state_at, clip_dir
        FROM captures WHERE drained_at IS NULL
        ORDER BY captured_at ASC, capture_id ASC
        LIMIT ?`,
