@@ -27,12 +27,12 @@ between the clip and the harvest is lost.
 
 Every call needs `Authorization: Bearer <capture token>`.
 
-| Call                              | Does                                            |
-| --------------------------------- | ----------------------------------------------- |
-| `POST /api/capture`               | Record a URL. `201` new, `200` already captured |
-| `GET /api/have?url=`              | Has this URL been captured?                     |
-| `GET /api/captures?drained=false` | What the drain has not taken yet                |
-| `PATCH /api/captures/<id>`        | Mark one capture as taken                       |
+| Call                              | Does                                                      |
+| --------------------------------- | --------------------------------------------------------- |
+| `POST /api/capture`               | Record a URL. `201` new, `200` already captured           |
+| `GET /api/have?url=`              | Has this URL been captured, and how far did its clip get? |
+| `GET /api/captures?drained=false` | What the drain has not taken yet                          |
+| `PATCH /api/captures/<id>`        | Mark one capture as taken, and record its state           |
 
 ```bash
 curl -X POST https://<host>/api/capture \
@@ -54,11 +54,25 @@ reaches the phone as the Shortcut's notification. A service that silently
 repairs its client's bugs makes them permanent.
 
 **`drained_at` means "taken out of the inbox" and nothing more.** Not "a page
-was written", not "the wiki cites it" - those live in the clip's derived state
-and in the ledger. An inbox that learns to answer them becomes a second ledger,
-and two ledgers disagree eventually. The consumer marks a capture _after_ it has
-the URL in hand, so a drain that dies halfway is simply re-run: taking a URL
-twice is harmless because the URL index dedupes downstream, losing one is not.
+was written" - that is `state`, below, and the two are deliberately separate
+columns. The consumer marks a capture _after_ it has the URL in hand, so a drain
+that dies halfway is simply re-run: taking a URL twice is harmless because the
+URL index dedupes downstream, losing one is not.
+
+**`state` is received, never derived.** It says how far the clip for a URL got -
+`captured`, `ingested` or `needs-claude` - and the service does not know that
+and must not guess: the ledger under `~/p/brain/.ingest/clips/` decides, and the
+Mac pushes here once that ledger is on `origin/main`. This column repeats the
+answer so a client with no access to the ledger can read it, which today is the
+browser extension colouring its toolbar icon per tab.
+
+That reverses an earlier rule of this service - that an inbox learning whether a
+page was written becomes a second ledger. The reversal is deliberate and the
+reasoning is in the capture-service spec's 2026-08-04 amendment; what keeps the
+old objection from coming true is the direction of travel. Nothing here computes
+a state, and a mirror that has drifted is repaired by re-running
+`~/p/brain/tools/capture/push_index_to_service.py`, never by reasoning in this
+codebase.
 
 ## URL normalisation is a contract, not an implementation detail
 
