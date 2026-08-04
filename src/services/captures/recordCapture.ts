@@ -1,4 +1,4 @@
-import { capturePool } from '@/services/db/capturePool'
+import { capturePool } from '@/db/capturePool'
 import type { CaptureInput } from '@/types/captures/CaptureInput'
 import { normalizeUrl } from '@/utils/url/normalizeUrl'
 import { ulid } from 'ulid'

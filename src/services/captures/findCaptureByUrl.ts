@@ -1,7 +1,8 @@
-import { capturePool } from '@/services/db/capturePool'
+import { capturePool } from '@/db/capturePool'
 import type { Capture } from '@/types/captures/Capture'
 import { normalizeUrl } from '@/utils/url/normalizeUrl'
 import type { RowDataPacket } from 'mysql2/promise'
+import { captureFromRow } from './captureFromRow'
 
 /** The capture for a URL, or null. This is what `GET /have` answers, and
  * answering it at share time - before a directory exists anywhere - is the gap
@@ -15,13 +16,5 @@ export const findCaptureByUrl = async (
     [normalizeUrl(url)],
   )
   const row = rows[0]
-  if (row === undefined) return null
-  return {
-    captureId: String(row.capture_id),
-    url: String(row.url),
-    note: row.note === null ? null : String(row.note),
-    captureSource: String(row.capture_source),
-    capturedAt: String(row.captured_at),
-    drainedAt: row.drained_at === null ? null : String(row.drained_at),
-  }
+  return row === undefined ? null : captureFromRow(row)
 }

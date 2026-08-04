@@ -10,6 +10,11 @@ nodeLinker: hoisted
 # from output tracing, and build-cpanel.sh fails if any native binary survives.
 allowBuilds:
   sharp: false
+  # ESLint's TypeScript import resolver; a real native binary, built here and
+  # never shipped - the deploy bundle carries no devDependency.
+  unrs-resolver: true
+  # Installs the git hooks in lefthook.yml on `pnpm install`.
+  lefthook: true
 
 # Neither of these reaches production - the deployed bundle contains only
 # @next, @swc, client-only, next, react, react-dom and styled-jsx, and this

@@ -4,14 +4,12 @@ import { parseCaptureInput } from './parseCaptureInput'
 describe('parseCaptureInput', () => {
   it('accepts a plain https URL', () => {
     const parsed = parseCaptureInput({ url: 'https://example.com/a' })
-    expect(parsed).toStrictEqual({
-      input: {
-        url: 'https://example.com/a',
-        note: null,
-        captureSource: 'unknown',
-        capturedAt: expect.any(String),
-      },
-    })
+    // Asserted field by field rather than with `expect.any(String)`, which is
+    // typed `any` and pollutes the whole object literal with it.
+    expect('input' in parsed && parsed.input.url).toBe('https://example.com/a')
+    expect('input' in parsed && parsed.input.note).toBeNull()
+    expect('input' in parsed && parsed.input.captureSource).toBe('unknown')
+    expect('input' in parsed && typeof parsed.input.capturedAt).toBe('string')
   })
 
   it('refuses the leaked Shortcuts variable label rather than salvaging it', () => {
