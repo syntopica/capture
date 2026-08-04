@@ -14,12 +14,12 @@ const configured = (process.env.DB_NAME ?? '') !== ''
 describe.skipIf(!configured)(
   'updateCaptureState against a real database',
   () => {
-    const url = 'https://example.invalid/state-probe'
+    const url = 'https://state-probe.invalid/a'
 
     const clean = async () =>
       capturePool().execute(
         'DELETE FROM captures WHERE normalized_url LIKE ?',
-        ['https://example.invalid/%'],
+        ['https://state-probe.invalid/%'],
       )
 
     beforeEach(clean)
