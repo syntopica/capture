@@ -30,3 +30,8 @@ allowBuilds:
 overrides:
   postcss: '>=8.5.23'
   sharp: '>=0.35.0'
+  # GHSA-2v37-7h3g-55p8, high: nanoid's custom generators can loop
+  # indefinitely. Arrives through next>postcss and vitest>vite>postcss. Capped
+  # inside 3.x on purpose - an open-ended range resolves to a major that
+  # carries its own advisory.
+  'nanoid@<3.3.18': '^3.3.18'
