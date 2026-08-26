@@ -44,7 +44,7 @@
   "devDependencies": {
     "@busirocket/eslint-config": "^0.7.2",
     "@busirocket/prettier-config": "^0.1.2",
-    "@busirocket/quality-config": "^0.7.0",
+    "@busirocket/quality-config": "^0.10.0",
     "@busirocket/tsconfig": "^0.2.1",
     "@eslint/js": "^10.0.1",
     "@next/eslint-plugin-next": "^16.3.0",
