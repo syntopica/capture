@@ -1,6 +1,6 @@
 import { capturePool } from '@/db/capturePool'
 import type { Capture } from '@/types/captures/Capture'
-import type { RowDataPacket } from 'mysql2/promise'
+import type { CaptureRow } from '@/types/captures/CaptureRow'
 import { captureFromRow } from './captureFromRow'
 
 /** Everything the drain has not taken yet, oldest first.
@@ -13,7 +13,7 @@ import { captureFromRow } from './captureFromRow'
 export const listUndrainedCaptures = async (
   limit: number,
 ): Promise<Capture[]> => {
-  const [rows] = await capturePool().query<RowDataPacket[]>(
+  const [rows] = await capturePool().query<CaptureRow[]>(
     `SELECT capture_id, url, note, capture_source, captured_at, drained_at,
               state, state_at, clip_dir
        FROM captures WHERE drained_at IS NULL
