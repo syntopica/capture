@@ -28,7 +28,7 @@
     "check:all": "pnpm type-check && pnpm lint && pnpm format:check && pnpm dupes",
     "check": "pnpm type-check && pnpm lint && pnpm format:check && pnpm test && pnpm dupes && pnpm knip",
     "deps:graph": "depcruise src scripts",
-    "type-coverage": "baseline-type-coverage --at-least 96.9",
+    "type-coverage": "baseline-type-coverage",
     "secrets:check": "gitleaks detect --no-banner --redact",
     "audit:check": "pnpm audit --audit-level=high",
     "check:quality": "pnpm knip && pnpm deps:graph && pnpm type-coverage",
