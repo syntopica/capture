@@ -9,7 +9,7 @@ import { updateCaptureState } from './updateCaptureState'
  * but unchanged still reports `affectedRows: 1` through mysql2.
  *
  * Run with: env $(grep -v '^#' .env.local | xargs) pnpm test */
-const configured = (process.env.DB_NAME ?? '') !== ''
+const configured = (process.env['DB_NAME'] ?? '') !== ''
 
 describe.skipIf(!configured)(
   'updateCaptureState against a real database',
