@@ -42,9 +42,3 @@ verified complete - `[-]` obsolete or superseded.
 
 Filed by `~/p/bin/daily`; one bullet per finding, updated in place while it
 repeats.
-
-- [ ] <!-- daily-tasks:COMMIT_FAIL --> **COMMIT_FAIL** (first seen 2026-09-12,
-      last seen 2026-09-12): the upgrade passed `type-check` but the commit hook
-      rejected it (after 9 TS4111 rewrites). Decisive line:
-      `Error: typescript-eslint does not support TS 7.0.`. Re-run:
-      `bash ~/p/bin/daily/ncu-update-repo.sh ~/p/capture-service /tmp/logs`.
