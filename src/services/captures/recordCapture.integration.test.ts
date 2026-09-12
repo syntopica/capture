@@ -14,7 +14,7 @@ import { recordCapture } from './recordCapture'
  * from the driver.
  *
  * Run with: env $(grep -v '^#' .env.local | xargs) pnpm test */
-const configured = (process.env.DB_NAME ?? '') !== ''
+const configured = (process.env['DB_NAME'] ?? '') !== ''
 
 describe.skipIf(!configured)('recordCapture against a real database', () => {
   const url = 'https://example.invalid/dedup-probe'

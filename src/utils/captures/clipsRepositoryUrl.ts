@@ -6,5 +6,5 @@
  * credential: this service holds none, and following the link is the reader's
  * own GitHub session doing the work. */
 export const CLIPS_REPOSITORY_URL =
-  process.env.CLIPS_REPOSITORY_URL ??
+  process.env['CLIPS_REPOSITORY_URL'] ??
   'https://github.com/<owner>/<clips-repo>'

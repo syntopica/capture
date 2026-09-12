@@ -26,17 +26,17 @@ import { capturePoolRef } from './capturePoolRef'
  * grants and re-syncs them. Connecting over the socket keeps the convention
  * cPanel maintains. */
 export const capturePool = (): Pool => {
-  const socketPath = process.env.DB_SOCKET ?? ''
+  const socketPath = process.env['DB_SOCKET'] ?? ''
   capturePoolRef.current ??= mysql.createPool({
     ...(socketPath === ''
       ? {
-          host: process.env.DB_HOST ?? '127.0.0.1',
-          port: Number(process.env.DB_PORT ?? '3306'),
+          host: process.env['DB_HOST'] ?? '127.0.0.1',
+          port: Number(process.env['DB_PORT'] ?? '3306'),
         }
       : { socketPath }),
-    user: process.env.DB_USER ?? '',
-    password: process.env.DB_PASSWORD ?? '',
-    database: process.env.DB_NAME ?? '',
+    user: process.env['DB_USER'] ?? '',
+    password: process.env['DB_PASSWORD'] ?? '',
+    database: process.env['DB_NAME'] ?? '',
     connectionLimit: 4,
     charset: 'utf8mb4',
   })
