@@ -5,6 +5,14 @@ verified complete - `[-]` obsolete or superseded.
 
 ## Baseline gate debt
 
+- [ ] Investigate the coverage gate observed after the 2026-09-14 directory
+      move. `pnpm check:ci` passes type checking, lint and formatting; all 33
+      tests pass (6 skipped), but V8 reports 80.23% line coverage against 80.45%
+      and 77.89% statement coverage against 78.12%. No application source or
+      threshold changed. Reproduce with the project's intended Node runtime,
+      then cover the missing behavior without lowering the ratchet. Evidence:
+      `/private/tmp/local-path-renames-20260914/capture-check.log`.
+
 - [x] **Cobertura de tipos al 96.93%, el liston compartido es 99%.** `dupes`,
       `knip` y `deps:graph` pasaron limpios; este es el unico gate que no llega.
       25 expresiones sin cubrir, 18 de ellas en
@@ -45,4 +53,7 @@ repeats.
 
 ## Shared package scope migration (2026-09-14)
 
-- [ ] After the owner publishes the renamed shared packages, regenerate the lockfile and run the existing repository quality gate. Source references now use the new scope; the lockfile is intentionally unchanged because the packages are not available offline.
+- [ ] After the owner publishes the renamed shared packages, regenerate the
+      lockfile and run the existing repository quality gate. Source references
+      now use the new scope; the lockfile is intentionally unchanged because the
+      packages are not available offline.
