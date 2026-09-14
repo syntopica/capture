@@ -9,8 +9,19 @@ import { createKnipConfig } from '@syntopica/quality-config/knip'
  * ("Refine entry pattern (no matches)"), which is worth reading rather than
  * scrolling past. Verified the other way too, with a deliberately dead export.
  *
- * Only `route.ts` is listed as an entry, and that is the whole truth about this
- * service: no page, no layout, no middleware, because it renders nothing. The
+ * `route.ts` was listed as an entry here until 2026-09-14. Knip 6.35's Next.js
+ * plugin registers those files itself, and the two kinds of entry are not
+ * equivalent: `includeEntryExports` (the preset sets it true) reaches an entry
+ * the project declares but not one a plugin registers. So listing them turned
+ * every route handler into a reported dead export - `POST`, `PATCH` and two
+ * `GET`s - because nothing in the repository imports what the framework calls.
+ * Dropping the glob leaves the files analysed exactly as before, verified two
+ * ways: no route reports as an unused file, and a probe export added to
+ * `src/utils/url/isHttpsUrl.ts` still fails the gate. What is genuinely lost is
+ * dead-export detection inside the route files themselves, where the exports
+ * are the framework's contract and the file is little else.
+ *
+ * No page, no layout, no middleware, because this service renders nothing. The
  * preset's patterns for those are dropped rather than carried as decoration,
  * and config files are left out because knip's own plugins already treat them
  * as entries.
@@ -21,6 +32,6 @@ import { createKnipConfig } from '@syntopica/quality-config/knip'
  * value is an object.
  */
 export default Object.assign(createKnipConfig({ framework: 'nextjs' }), {
-  entry: ['src/app/**/route.ts', 'src/**/*.test.ts', 'scripts/*.mjs'],
+  entry: ['src/**/*.test.ts', 'scripts/*.mjs'],
   project: ['src/**/*.{ts,tsx}'],
 })
