@@ -4,7 +4,7 @@ import { IDENTITY_QUERY_PARAMS } from './identityQueryParams'
  * look like two removed.
  *
  * This is a deliberate port of `normalize()` in
- * `~/p/brain/tools/capture/url_index.py`, and it must stay byte-identical to
+ * `~/p/wiki/tools/capture/url_index.py`, and it must stay byte-identical to
  * it. The two read the same question - "do we already have this?" - from two
  * stores, and an index answering a different question than the one it was built
  * from is worse than no index at all. The Python is:

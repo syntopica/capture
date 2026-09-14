@@ -12,7 +12,7 @@
  * default rule is already right there.
  *
  * This table is the twin of `IDENTITY_QUERY_PARAMS` in
- * `~/p/brain/tools/capture/url_index.py` and must stay in step with it, for the
+ * `~/p/wiki/tools/capture/url_index.py` and must stay in step with it, for the
  * same reason the two `normalize` implementations do. */
 export const IDENTITY_QUERY_PARAMS: Readonly<
   Record<string, readonly string[]>

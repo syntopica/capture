@@ -3,14 +3,14 @@
 -- Two tables and nothing else. The service records URLs and answers whether a
 -- URL is already recorded; the body of an article is captured by the harvest on
 -- the owner's Mac, never here.
--- SPEC: ~/p/brain/docs/superpowers/specs/2026-08-04-capture-service-design.md
+-- SPEC: ~/p/wiki/docs/superpowers/specs/2026-08-04-capture-service-design.md
 
 CREATE TABLE IF NOT EXISTS captures (
   -- The article's identity is host plus path, lowercased, with query string,
   -- fragment and trailing slash removed. It is the primary key because a URL
   -- captured twice is one capture, and answering that is the whole point of
   -- the service. The normalisation must stay identical to the one in
-  -- ~/p/brain/tools/capture/url_index.py: an index that answers a different
+  -- ~/p/wiki/tools/capture/url_index.py: an index that answers a different
   -- question than the one it was built from is worse than no index.
   normalized_url VARCHAR(700) NOT NULL PRIMARY KEY,
   url            TEXT         NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS captures (
   -- origin/main, so this column repeats an answer rather than forming one. A
   -- browser extension reads it per tab to colour its toolbar icon, which is the
   -- need that reversed the earlier rule against the inbox knowing it.
-  -- SPEC: ~/p/brain/docs/superpowers/specs/2026-08-04-clip-state-in-the-browser-design.md
+  -- SPEC: ~/p/wiki/docs/superpowers/specs/2026-08-04-clip-state-in-the-browser-design.md
   state          VARCHAR(16)  NOT NULL DEFAULT 'captured',
   state_at       DATETIME         NULL,
   -- clips/processed/2026/07/<dir>, so a client can link to the clip it names.

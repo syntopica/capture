@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { normalizeUrl } from './normalizeUrl'
 
 /** These cases are the contract with `normalize()` in
- * `~/p/brain/tools/capture/url_index.py`. If one of them changes, the 1484 rows
+ * `~/p/wiki/tools/capture/url_index.py`. If one of them changes, the 1484 rows
  * already keyed by the Python version stop matching what this service stores,
  * and the dedup question quietly starts returning the wrong answer. Change both
  * or neither. */
