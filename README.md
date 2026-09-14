@@ -4,7 +4,7 @@ The URL inbox for the phone. It records URLs, answers whether a URL is already
 recorded, and repeats how far the clip for it got. That is the whole service -
 it never decides that last answer, it is told.
 
-Design: `~/p/brain/docs/superpowers/specs/2026-08-04-capture-service-design.md`.
+Design: `~/p/wiki/docs/superpowers/specs/2026-08-04-capture-service-design.md`.
 
 ## What it deliberately does not do
 
@@ -62,7 +62,7 @@ URL index dedupes downstream, losing one is not.
 
 **`state` is received, never derived.** It says how far the clip for a URL got -
 `captured`, `ingested` or `needs-claude` - and the service does not know that
-and must not guess: the ledger under `~/p/brain/.ingest/clips/` decides, and the
+and must not guess: the ledger under `~/p/wiki/.ingest/clips/` decides, and the
 Mac pushes here once that ledger is on `origin/main`. This column repeats the
 answer so a client with no access to the ledger can read it, which today is the
 browser extension colouring its toolbar icon per tab.
@@ -72,13 +72,13 @@ page was written becomes a second ledger. The reversal is deliberate and the
 reasoning is in the capture-service spec's 2026-08-04 amendment; what keeps the
 old objection from coming true is the direction of travel. Nothing here computes
 a state, and a mirror that has drifted is repaired by re-running
-`~/p/brain/tools/capture/push_index_to_service.py`, never by reasoning in this
+`~/p/wiki/tools/capture/push_index_to_service.py`, never by reasoning in this
 codebase.
 
 ## URL normalisation is a contract, not an implementation detail
 
 `src/utils/url/normalizeUrl.ts` is a port of `normalize()` in
-`~/p/brain/tools/capture/url_index.py`, and the two must stay byte-identical.
+`~/p/wiki/tools/capture/url_index.py`, and the two must stay byte-identical.
 They answer the same question - "do we already have this?" - from two stores,
 and 1484 rows are already keyed by the Python version. `normalizeUrl.test.ts`
 holds the parity cases. Change both or neither.
