@@ -1,4 +1,4 @@
-# Mirrors createLefthookConfig() in @busirocket/quality-config/lefthook.
+# Mirrors createLefthookConfig() in @syntopica/quality-config/lefthook.
 #
 # The pre-push secret scan matters more here than in most repos: this service
 # authenticates with a capture token and connects to MySQL with a password, and

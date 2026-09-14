@@ -1,6 +1,6 @@
-import { createBaseConfig } from '@busirocket/eslint-config/base'
-import { createCodeQualityConfig } from '@busirocket/eslint-config/code-quality'
-import { createNextjsConfig } from '@busirocket/eslint-config/nextjs'
+import { createBaseConfig } from '@syntopica/eslint-config/base'
+import { createCodeQualityConfig } from '@syntopica/eslint-config/code-quality'
+import { createNextjsConfig } from '@syntopica/eslint-config/nextjs'
 import architecture from './eslint.architecture.js'
 
 // Layer order: base -> framework -> code-quality -> architecture.
