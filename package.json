@@ -43,10 +43,10 @@
     "ulid": "^3.0.2"
   },
   "devDependencies": {
-    "@busirocket/eslint-config": "^0.8.0",
-    "@busirocket/prettier-config": "^0.2.0",
-    "@busirocket/quality-config": "^0.11.0",
-    "@busirocket/tsconfig": "^0.3.0",
+    "@syntopica/eslint-config": "^0.8.0",
+    "@syntopica/prettier-config": "^0.2.0",
+    "@syntopica/quality-config": "^0.11.0",
+    "@syntopica/tsconfig": "^0.3.0",
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.2.2",
     "@eslint/js": "^10.0.1",

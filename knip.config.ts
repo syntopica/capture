@@ -1,4 +1,4 @@
-import { createKnipConfig } from '@busirocket/quality-config/knip'
+import { createKnipConfig } from '@syntopica/quality-config/knip'
 
 /**
  * The baseline's Next.js preset assumes the App Router lives at `app/` in the
