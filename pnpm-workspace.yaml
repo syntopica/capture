@@ -35,9 +35,3 @@ overrides:
   # inside 3.x on purpose - an open-ended range resolves to a major that
   # carries its own advisory.
   'nanoid@<3.3.18': '^3.3.18'
-
-minimumReleaseAgeExclude:
-  - '@syntopica/eslint-config@0.8.0'
-  - '@syntopica/prettier-config@0.2.0'
-  - '@syntopica/quality-config@0.11.0'
-  - '@syntopica/tsconfig@0.3.0'
