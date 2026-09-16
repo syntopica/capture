@@ -60,3 +60,16 @@ repeats.
       lockfile and run the existing repository quality gate. Source references
       now use the new scope; the lockfile is intentionally unchanged because the
       packages are not available offline.
+
+## Clip links after the inbox hand-over (2026-09-16)
+
+- [ ] `clipUrl` composes `CLIPS_REPOSITORY_URL/tree/main/<clip_dir>`, which
+      pointed at the clip while `CristianDeluxe/brain-clips` was the archive.
+      Since 2026-09-16 that repository is only the clipper's inbox: `clips pull`
+      copies each pending clip into the private wiki at `clips/<clip_dir>` and
+      removes it from the inbox, so the `/have` link 404s once a clip has been
+      handed over. The wiki is private, so a public link cannot reach it either.
+      Smallest step: make `clip_url` null (or point it at the inbox commit that
+      introduced the clip, which stays reachable in history) and let the
+      extension show `state` alone; the clipper's `fetch-clip-status` already
+      tolerates a null `clip_url`.
