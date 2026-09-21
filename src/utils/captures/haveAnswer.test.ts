@@ -22,8 +22,7 @@ describe('haveAnswer', () => {
       captured_at: '2026-08-04T12:00:00+02:00',
       state: 'ingested',
       clip_dir: 'clips/processed/2026/08/a-clip',
-      clip_url:
-        'https://github.com/<owner>/<clips-repo>/tree/main/clips/processed/2026/08/a-clip',
+      clip_url: null,
     })
   })
 

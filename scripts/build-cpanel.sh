@@ -70,7 +70,7 @@ du -sh "$OUT"
 echo
 echo "Deploy with:"
 echo "  rsync -az --delete --exclude '.env' -e 'ssh -p 6922' \\"
-echo "    cpanel-build/ <host>:<app-home>/apps/capture-service/"
+echo "    cpanel-build/ <host>:<app-directory>/"
 echo
 echo "The .env on the server is NOT in this bundle and must survive the upload."
 echo "Startup file: server.js"

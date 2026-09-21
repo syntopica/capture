@@ -64,8 +64,8 @@ repeats.
 ## Clip links after the inbox hand-over (2026-09-16)
 
 - [ ] `clipUrl` composes `CLIPS_REPOSITORY_URL/tree/main/<clip_dir>`, which
-      pointed at the clip while `<owner>/<clips-repo>` was the archive.
-      Since 2026-09-16 that repository is only the clipper's inbox: `clips pull`
+      pointed at the clip while `<owner>/<clips-repo>` was the archive. Since
+      2026-09-16 that repository is only the clipper's inbox: `clips pull`
       copies each pending clip into the private wiki at `clips/<clip_dir>` and
       removes it from the inbox, so the `/have` link 404s once a clip has been
       handed over. The wiki is private, so a public link cannot reach it either.
