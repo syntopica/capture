@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Assembles the deployable bundle for the cPanel Node application on server-a.
+# Assembles the deployable bundle for the cPanel Node application on the server.
 #
 # Adapted from the sibling app on the same server, whose comments record what
 # each step is defending against. Next.js writes a self-contained server to
@@ -45,7 +45,7 @@ cp -r .next/static "$OUT/.next/static"
 # from disk. Shipping the traced tree then means production runs the exact bytes
 # that were built and tested here.
 #
-# It also sidesteps a real constraint on the server: server-a's pnpm enforces a
+# It also sidesteps a real constraint on the server: the server's pnpm enforces a
 # `minimumReleaseAge` supply-chain policy and refuses a lockfile resolved the
 # same day. Installing there would mean either waiting or relaxing that policy
 # on a machine that carries client data, and neither is a good trade for a
@@ -72,5 +72,5 @@ echo "Deploy with:"
 echo "  rsync -az --delete --exclude '.env' -e 'ssh -p 6922' \\"
 echo "    cpanel-build/ <host>:<app-home>/apps/capture-service/"
 echo
-echo "The .env on server-a is NOT in this bundle and must survive the upload."
+echo "The .env on the server is NOT in this bundle and must survive the upload."
 echo "Startup file: server.js"

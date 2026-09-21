@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next'
 import { fileURLToPath } from 'node:url'
 
-/** `standalone` is what makes the cPanel deploy on server-a possible: Next.js writes
+/** `standalone` is what makes the cPanel deploy on the server possible: Next.js writes
  * a self-contained server that runs with plain `node server.js`, which is what
  * Passenger starts. See scripts/build-cpanel.sh.
  *
@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url'
  * service answers JSON and serves no image at all, but Next.js pulls in `sharp`
  * for the optimiser regardless, and `sharp` ships a per-platform native binary -
  * the traced bundle from this Mac carried `sharp-darwin-arm64.node` straight at
- * a Linux server. That is the exact failure the sibling app on server-a already met,
+ * a Linux server. That is the exact failure the sibling app on the server already met,
  * where the macOS binary reached production and every image was silently served
  * unoptimised behind a 200. With the optimiser off there is no native code in
  * the bundle at all, which is what lets the build ship its own dependencies

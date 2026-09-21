@@ -5,7 +5,7 @@ import { capturePoolRef } from './capturePoolRef'
 /** The MySQL pool, created once per process and reused.
  *
  * MySQL rather than a SQLite file, and not for performance - at a handful of
- * captures a day nothing here is a bottleneck. The deploy to server-a is
+ * captures a day nothing here is a bottleneck. The deploy to the server is
  * `rsync --delete`, which is why the sibling app on that box carries a
  * documented `--exclude '.env'`; a database file inside the application
  * directory is one forgotten exclusion away from taking the whole capture

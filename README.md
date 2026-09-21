@@ -117,10 +117,10 @@ absorbed duplicate both reporting `affectedRows: 1`, because mysql2 connects
 with `CLIENT_FOUND_ROWS` - is invisible to every unit test, since the wrong
 value comes from the driver.
 
-## Deploying to server-a
+## Deploying to a cPanel host
 
-It runs under the a cPanel account as a Next.js standalone
-app behind Passenger, the same shape as the sibling app on that server.
+It runs under a cPanel account as a Next.js standalone app behind Passenger, the
+same shape as the sibling app on that server.
 
 ```bash
 pnpm build:cpanel     # produces cpanel-build/
@@ -140,10 +140,10 @@ One `GET` storing raw HTML, no extraction and no assets - one request per
 capture rather than twenty-one - and processing happens later from the stored
 bytes.
 
-Before that ships, note what the design records: server-a's loopback carries two
-Redis instances with no password, and **cPanel account separation does not cover
-this** - it isolates files and MySQL grants, but any process on the host reaches
-loopback TCP regardless of which account runs it. They are safe today only
-because nothing on that machine makes outbound requests a third party chooses.
-So either both get a password first, or the fetch runs somewhere that has no
-loopback of ours.
+Before that ships, settle where the fetch runs. Fetching a URL a third party
+chooses turns this service into a client of whatever that URL names, and
+**cPanel account separation does not cover loopback**: it isolates files and
+MySQL grants, but any process on the host reaches services bound to 127.0.0.1
+regardless of which account runs it. So every loopback service on the host has
+to authenticate its callers before this feature exists, or the fetch has to run
+somewhere that shares no loopback with them.
