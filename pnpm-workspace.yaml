@@ -29,7 +29,7 @@ allowBuilds:
 # lockfile does not carry a vulnerable copy at all.
 overrides:
   postcss: '>=8.5.23'
-  sharp: '>=0.35.0'
+  sharp: '>=0.35.4'
   # GHSA-2v37-7h3g-55p8, high: nanoid's custom generators can loop
   # indefinitely. Arrives through next>postcss and vitest>vite>postcss. Capped
   # inside 3.x on purpose - an open-ended range resolves to a major that
