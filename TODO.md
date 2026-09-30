@@ -73,3 +73,13 @@ repeats.
       introduced the clip, which stays reachable in history) and let the
       extension show `state` alone; the clipper's `fetch-clip-status` already
       tolerates a null `clip_url`.
+
+## Desktop clip state mirroring (2026-09-30)
+
+- [ ] `POST /api/capture` returns 500 for desktop clips: every `clips ingest` of
+      the 2026-09-30 X-tab clips logged
+      `could not mirror needs-claude|ingested for https://x.com/trq212/status/2101009392611278961: recording ... returned 500`
+      (clip 01M3QXGJ, both routing and publish). Non-fatal - the ingest still
+      publishes - but the service never learns those clips exist, so `/have`
+      answers wrong for them. Next step: read the service log for that request
+      and reproduce with one `curl` POST of that URL.
