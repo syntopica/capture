@@ -131,9 +131,18 @@ Upload the contents of `cpanel-build/`, install dependencies there with pnpm,
 and set the startup file to `server.js`.
 
 **The `.env` on the server is not in the bundle and must survive the upload:**
-`rsync --delete --exclude '.env'`. The sibling app carries that exclusion for
-the same reason, and it is also why this service keeps its data in MySQL rather
-than in a file inside the application directory.
+`rsync --delete --exclude '.env' --exclude '.env.*'`, plus any start script or
+env file the host keeps next to the app (on an Enhance host, `.nubenode-*`),
+which a bare `--delete` removes.
+
+On an Enhance host the app runs as a persistent app inside the site's container,
+where the MariaDB socket is `/run/mysqld/mysqld.sock`, not the cPanel path
+`/var/lib/mysql/mysql.sock`; TCP to `127.0.0.1` is refused there. A wrong
+`DB_SOCKET` makes every authenticated request answer 500 while unauthenticated
+ones still answer 401, so check with a real token after any host move. The
+sibling app carries that exclusion for the same reason, and it is also why this
+service keeps its data in MySQL rather than in a file inside the application
+directory.
 
 ## If content capture is ever added
 
