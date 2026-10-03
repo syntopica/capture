@@ -92,3 +92,9 @@ repeats.
   `curl` that the answer is
   `{ data: { schemaVersion: 1,     count, oldestAt } }`; orbit's capture adapter
   reads it.
+
+- [ ] `oldestAt` from `GET /api/captures/count` is `MIN(captured_at)` over the
+      client's string with its offset intact, so mixed offsets (`+02:00` vs `Z`)
+      sort lexically, not chronologically, and the reported oldest can be wrong
+      by up to the offset spread. Smallest step: store a normalised UTC column
+      (or select the row whose parsed instant is smallest) and return it in UTC.
