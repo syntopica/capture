@@ -83,3 +83,12 @@ repeats.
       publishes - but the service never learns those clips exist, so `/have`
       answers wrong for them. Next step: read the service log for that request
       and reproduce with one `curl` POST of that URL.
+
+## Health dashboard
+
+- [!] `GET /api/captures/count` (18bc65c) is built and checked but not deployed.
+  Blocked on the owner: a production deploy (`pnpm build:cpanel` and upload,
+  README "Deploying to a cPanel host"). After it, verify with an authorized
+  `curl` that the answer is
+  `{ data: { schemaVersion: 1,     count, oldestAt } }`; orbit's capture adapter
+  reads it.
