@@ -86,13 +86,6 @@ repeats.
 
 ## Health dashboard
 
-- [!] `GET /api/captures/count` (18bc65c) is built and checked but not deployed.
-  Blocked on the owner: a production deploy (`pnpm build:cpanel` and upload,
-  README "Deploying to a cPanel host"). After it, verify with an authorized
-  `curl` that the answer is
-  `{ data: { schemaVersion: 1,     count, oldestAt } }`; orbit's capture adapter
-  reads it.
-
 - [ ] `oldestAt` from `GET /api/captures/count` is `MIN(captured_at)` over the
       client's string with its offset intact, so mixed offsets (`+02:00` vs `Z`)
       sort lexically, not chronologically, and the reported oldest can be wrong
