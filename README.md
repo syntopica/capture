@@ -34,6 +34,7 @@ Every call needs `Authorization: Bearer <capture token>`.
 | `GET /api/have?url=`              | Has this URL been captured, and how far did its clip get? |
 | `GET /api/captures?drained=false` | What the drain has not taken yet                          |
 | `PATCH /api/captures/<id>`        | Mark one capture as taken, and record its state           |
+| `GET /api/captures/count`         | How many wait for the drain, and the oldest capture time  |
 
 ```bash
 curl -X POST https://<host>/api/capture \
