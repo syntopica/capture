@@ -1,5 +1,6 @@
 import { capturePool } from '@/db/capturePool'
-import type { CaptureState } from '@/types/captures/CaptureState'
+import type { CaptureStateInput } from '@/types/captures/CaptureStateInput'
+import type { ResultSetHeader } from 'mysql2/promise'
 
 /** Store how far a clip got. Returns whether a row matched, so the route can
  * answer 404 for an id that does not exist rather than reporting a silent
@@ -21,7 +22,7 @@ import type { CaptureState } from '@/types/captures/CaptureState'
  * "changed" made the endpoint answer the opposite of the truth. */
 export const updateCaptureState = async (
   captureId: string,
-  input: { state: CaptureState | null; clipDir: string | null },
+  input: CaptureStateInput,
 ): Promise<boolean> => {
   if (input.state === null && input.clipDir === null) {
     const [rows] = await capturePool().query(
@@ -38,5 +39,5 @@ export const updateCaptureState = async (
       WHERE capture_id = ?`,
     [input.state, input.clipDir, captureId],
   )
-  return (result as { affectedRows: number }).affectedRows === 1
+  return (result as ResultSetHeader).affectedRows === 1
 }

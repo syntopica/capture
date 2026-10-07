@@ -1,3 +1,4 @@
+import type { ParsedField } from '@/types/captures/ParsedField'
 import { readTrimmedField } from './readTrimmedField'
 
 /** The `clip_dir` field of a push, or the reason it was refused.
@@ -8,7 +9,7 @@ import { readTrimmedField } from './readTrimmedField'
  * refusing even though the link is public and carries no credential. */
 export const readClipDirectoryField = (
   record: Record<string, unknown>,
-): { value: string | null } | { error: string } => {
+): ParsedField<string | null> => {
   const clipDir = readTrimmedField(record, 'clip_dir')
   if (clipDir === '') return { value: null }
   if (!clipDir.startsWith('clips/') || clipDir.includes('..'))

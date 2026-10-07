@@ -1,4 +1,5 @@
 import type { CaptureInput } from '@/types/captures/CaptureInput'
+import type { ParsedInput } from '@/types/captures/ParsedInput'
 import { isHttpsUrl } from '@/utils/url/isHttpsUrl'
 import { MAX_NOTE_LENGTH } from './maxNoteLength'
 import { readTrimmedField } from './readTrimmedField'
@@ -19,9 +20,7 @@ import { readTrimmedField } from './readTrimmedField'
  * stamped here: a phone captures in local time and the offset says where it
  * happened. It is not parsed, because a malformed timestamp is worth keeping
  * over a lost capture. */
-export const parseCaptureInput = (
-  body: unknown,
-): { input: CaptureInput } | { error: string } => {
+export const parseCaptureInput = (body: unknown): ParsedInput<CaptureInput> => {
   if (typeof body !== 'object' || body === null || Array.isArray(body))
     return { error: 'body must be a JSON object' }
   const record = body as Record<string, unknown>

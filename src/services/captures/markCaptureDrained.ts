@@ -1,4 +1,5 @@
 import { capturePool } from '@/db/capturePool'
+import type { ResultSetHeader } from 'mysql2/promise'
 
 /** Mark one capture as taken out of the inbox. Returns whether a row matched,
  * so the route can answer 404 for an id that does not exist rather than
@@ -20,7 +21,7 @@ export const markCaptureDrained = async (
        WHERE capture_id = ? AND drained_at IS NULL`,
     [captureId],
   )
-  if ((result as { affectedRows: number }).affectedRows === 1) return true
+  if ((result as ResultSetHeader).affectedRows === 1) return true
   const [rows] = await capturePool().query(
     'SELECT 1 FROM captures WHERE capture_id = ?',
     [captureId],

@@ -1,4 +1,5 @@
 import type { CaptureState } from '@/types/captures/CaptureState'
+import type { ParsedField } from '@/types/captures/ParsedField'
 import { CAPTURE_STATES } from './captureStates'
 import { isCaptureState } from './isCaptureState'
 import { readTrimmedField } from './readTrimmedField'
@@ -12,7 +13,7 @@ import { readTrimmedField } from './readTrimmedField'
  * extension, far from the request that caused it. */
 export const readCaptureStateField = (
   record: Record<string, unknown>,
-): { value: CaptureState | null } | { error: string } => {
+): ParsedField<CaptureState | null> => {
   const state = readTrimmedField(record, 'state')
   if (state === '') return { value: null }
   if (!isCaptureState(state))

@@ -1,4 +1,5 @@
-import type { CaptureState } from '@/types/captures/CaptureState'
+import type { CaptureStateInput } from '@/types/captures/CaptureStateInput'
+import type { ParsedInput } from '@/types/captures/ParsedInput'
 import { readCaptureStateField } from './readCaptureStateField'
 import { readClipDirectoryField } from './readClipDirectoryField'
 
@@ -13,9 +14,7 @@ import { readClipDirectoryField } from './readClipDirectoryField'
  * check they justify. */
 export const parseCaptureStateInput = (
   body: unknown,
-):
-  | { input: { state: CaptureState | null; clipDir: string | null } }
-  | { error: string } => {
+): ParsedInput<CaptureStateInput> => {
   if (body === null || body === undefined)
     return { input: { state: null, clipDir: null } }
   if (typeof body !== 'object' || Array.isArray(body))

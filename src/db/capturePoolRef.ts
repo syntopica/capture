@@ -1,4 +1,4 @@
-import type { Pool } from 'mysql2/promise'
+import type { PoolRef } from '@/types/db/PoolRef'
 
 /** The one live pool, held in a box so it can be created on first use.
  *
@@ -6,4 +6,4 @@ import type { Pool } from 'mysql2/promise'
  * declaration, which the Primary Unit Rule forbids: one file, one exported
  * unit, and no private state smuggled in alongside it. Making the box itself
  * the file's export keeps the memoisation and states plainly that it exists. */
-export const capturePoolRef: { current: Pool | null } = { current: null }
+export const capturePoolRef: PoolRef = { current: null }

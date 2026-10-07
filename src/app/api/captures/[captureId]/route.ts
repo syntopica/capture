@@ -1,6 +1,7 @@
 import { authorizeRequest } from '@/services/auth/authorizeRequest'
 import { markCaptureDrained } from '@/services/captures/markCaptureDrained'
 import { updateCaptureState } from '@/services/captures/updateCaptureState'
+import type { CaptureRouteContext } from '@/types/captures/CaptureRouteContext'
 import { parseCaptureStateInput } from '@/utils/captures/parseCaptureStateInput'
 import { jsonError } from '@/utils/http/jsonError'
 import { jsonOk } from '@/utils/http/jsonOk'
@@ -19,7 +20,7 @@ import { jsonOk } from '@/utils/http/jsonOk'
  * work and the drain would go promote articles the store already has. */
 export const PATCH = async (
   request: Request,
-  context: { params: Promise<{ captureId: string }> },
+  context: CaptureRouteContext,
 ): Promise<Response> => {
   if (!(await authorizeRequest(request)))
     return jsonError('UNAUTHORIZED', 'invalid capture token', 401)

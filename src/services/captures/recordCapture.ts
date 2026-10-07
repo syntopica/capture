@@ -1,5 +1,6 @@
 import { capturePool } from '@/db/capturePool'
 import type { CaptureInput } from '@/types/captures/CaptureInput'
+import type { RecordCaptureResult } from '@/types/captures/RecordCaptureResult'
 import { normalizeUrl } from '@/utils/url/normalizeUrl'
 import { ulid } from 'ulid'
 import { findCaptureByUrl } from './findCaptureByUrl'
@@ -31,7 +32,7 @@ import { findCaptureByUrl } from './findCaptureByUrl'
  * is a ULID because the rest of the clip store is keyed on one. */
 export const recordCapture = async (
   input: CaptureInput,
-): Promise<{ captureId: string; alreadyCaptured: boolean }> => {
+): Promise<RecordCaptureResult> => {
   const captureId = ulid()
   await capturePool().execute(
     `INSERT INTO captures
