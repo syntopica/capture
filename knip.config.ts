@@ -30,8 +30,16 @@ import { createKnipConfig } from '@syntopica/quality-config/knip'
  * callable form, and spreading it trips `no-misused-spread` - the rule is right
  * that spreading a maybe-function is a bug waiting to happen, even though this
  * value is an object.
+ *
+ * `gitleaks` is a Go binary, not an npm package: CI installs a pinned,
+ * checksum-verified release before `check:security`, and lefthook calls the
+ * one on the developer's PATH. No package can provide it, so knip is told so
+ * rather than left warning about an unlisted binary on every run.
  */
-export default Object.assign(createKnipConfig({ framework: 'nextjs' }), {
-  entry: ['src/**/*.test.ts', 'scripts/*.mjs'],
-  project: ['src/**/*.{ts,tsx}'],
-})
+export default Object.assign(
+  createKnipConfig({ framework: 'nextjs', ignoreBinaries: ['gitleaks'] }),
+  {
+    entry: ['src/**/*.test.ts', 'scripts/*.mjs'],
+    project: ['src/**/*.{ts,tsx}'],
+  },
+)
