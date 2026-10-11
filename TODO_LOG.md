@@ -6,6 +6,12 @@ Closed work, newest first, grouped by year and month.
 
 ### 2026-10
 
+- 2026-10-11 - `check:security` red on GHSA-vfj7-8cjw-p6xm (braces <=3.0.3, no
+  patched release, lint-time only): `audit:check` now runs
+  `baseline-audit --level high` from quality-config with an expiring waiver in
+  `.baseline-advisories.json` (expires 2026-12-31, same advisory and expiry as
+  codeality's). Owner decision relayed by the coordinator. Evidence:
+  `pnpm check:security` reports 0 unwaived, 1 waived.
 - 2026-10-11 - `pnpm type-check` TS4111 failures: already fixed before this
   pass; every `process.env` read uses bracket access. Evidence:
   `pnpm type-check` exits 0 on `e8423bd`.

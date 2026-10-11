@@ -34,14 +34,6 @@ verified complete - `[-]` obsolete or superseded.
 
 ## Gate debt (2026-10-11)
 
-- [!] `pnpm check:security` (CI job "secrets + advisories + workflows") fails
-  `audit:check` on GHSA-vfj7-8cjw-p6xm, braces <=3.0.3 stack exhaustion, reached
-  only through `@next/eslint-plugin-next>fast-glob>micromatch` at lint time. No
-  fixed braces version is published (latest 3.0.3, advisory lists no patched
-  version), so no override can fix it and the gate was red on `main` before this
-  pass too. Unblocks when braces or micromatch ships a fix: then add
-  `'braces@<3.0.4': '^3.0.4'` under `overrides` in `pnpm-workspace.yaml` and
-  re-run `pnpm audit:check`.
 - [ ] Drop `ignoreDependencies: ['type-coverage']` from `knip.config.ts` once
       `@syntopica/quality-config` releases its fix for reading the
       `type-coverage` script name as the binary (unreleased in the codeality
