@@ -24,10 +24,10 @@ export default defineConfig({
         // autoUpdate raises these values but never lowers them, so a provider
         // change has to be re-recorded by hand.
         autoUpdate: true,
-        lines: 80.68,
-        functions: 78.94,
+        lines: 82.1,
+        functions: 80.95,
         branches: 70.96,
-        statements: 78.35,
+        statements: 80,
       },
     },
     include: ['src/**/*.test.ts'],
