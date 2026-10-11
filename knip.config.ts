@@ -35,20 +35,11 @@ import { createKnipConfig } from '@syntopica/quality-config/knip'
  * checksum-verified release before `check:security`, and lefthook calls the
  * one on the developer's PATH. No package can provide it, so knip is told so
  * rather than left warning about an unlisted binary on every run.
- *
- * `type-coverage` is used, through `baseline-type-coverage`, which runs it
- * with `pnpm exec`. quality-config 0.13.1 decides whether to ignore it by
- * looking for the word in the scripts, and reads the script *name*
- * `type-coverage` as the binary being called, so it stops ignoring it and knip
- * reports the package unused. The fix is unreleased in quality-config; once a
- * release carries it, this entry turns into a `Remove from
- * ignoreDependencies` hint and should go.
  */
 export default Object.assign(
   createKnipConfig({
     framework: 'nextjs',
     ignoreBinaries: ['gitleaks'],
-    ignoreDependencies: ['type-coverage'],
   }),
   {
     entry: ['src/**/*.test.ts', 'scripts/*.mjs'],

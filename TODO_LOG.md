@@ -6,6 +6,10 @@ Closed work, newest first, grouped by year and month.
 
 ### 2026-10
 
+- 2026-10-11 - Dropped the `type-coverage` knip workaround:
+  `@syntopica/quality-config` 0.13.2 (published today) no longer reads the
+  script name as the binary. `pnpm knip` exits 0 with no hints;
+  `pnpm check:quality` passes (99.11%).
 - 2026-10-11 - Deployed `main` at `40a3419` (UTC `oldestAt`, the dependency
   upgrade, the audit waiver) with the documented `pnpm build:cpanel` + rsync +
   persistent-app restart. **Rollback point:** the previous production build was

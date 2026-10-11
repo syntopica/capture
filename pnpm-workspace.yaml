@@ -46,3 +46,4 @@ overrides:
 minimumReleaseAgeExclude:
   - '@syntopica/eslint-config@0.9.0'
   - eslint-plugin-code-policy@0.8.0
+  - '@syntopica/quality-config@0.13.2'

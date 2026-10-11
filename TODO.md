@@ -34,12 +34,6 @@ verified complete - `[-]` obsolete or superseded.
 
 ## Gate debt (2026-10-11)
 
-- [ ] Drop `ignoreDependencies: ['type-coverage']` from `knip.config.ts` once
-      `@syntopica/quality-config` releases its fix for reading the
-      `type-coverage` script name as the binary (unreleased in the codeality
-      repo on 2026-10-11). Check: `pnpm knip` prints
-      `type-coverage ... Remove from ignoreDependencies`.
-
 ## Daily round
 
 Filed by `~/p/bin/daily`; one bullet per finding, updated in place while it

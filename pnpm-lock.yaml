@@ -50,8 +50,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(prettier-plugin-css-order@2.2.0(postcss@8.5.29)(prettier@3.9.10))(prettier-plugin-organize-imports@4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.10))(prettier@3.9.10)
       '@syntopica/quality-config':
-        specifier: ^0.13.1
-        version: 0.13.1(@commitlint/config-conventional@21.2.3)(@typescript/typescript6@6.0.2)(dependency-cruiser@18.5.0)(knip@6.41.0)(oxlint@1.87.0)
+        specifier: ^0.13.2
+        version: 0.13.2(@commitlint/config-conventional@21.2.3)(@typescript/typescript6@6.0.2)(dependency-cruiser@18.5.0)(knip@6.41.0)(oxlint@1.87.0)
       '@syntopica/tsconfig':
         specifier: ^0.3.1
         version: 0.3.1
@@ -1217,8 +1217,8 @@ packages:
       prettier-plugin-tailwindcss:
         optional: true
 
-  '@syntopica/quality-config@0.13.1':
-    resolution: {integrity: sha512-mSKlKkZ0wdnHv5ITjEhGIym0VLkQdCahw2ilq1SzrNewkgz8T/SwV5ywgghwKYRTt/UPsgLYwD08DGncoz6GwA==}
+  '@syntopica/quality-config@0.13.2':
+    resolution: {integrity: sha512-TFCQr4ydx605MjqIcLi23C5lrT7Vk6HgVCmFc/HmxHeJphOD0ppRJ5ungkHsOLVoUwEsfvA+kIO4nYEOBUuQPg==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -4570,7 +4570,7 @@ snapshots:
       prettier-plugin-css-order: 2.2.0(postcss@8.5.29)(prettier@3.9.10)
       prettier-plugin-organize-imports: 4.3.0(@typescript/typescript6@6.0.2)(prettier@3.9.10)
 
-  '@syntopica/quality-config@0.13.1(@commitlint/config-conventional@21.2.3)(@typescript/typescript6@6.0.2)(dependency-cruiser@18.5.0)(knip@6.41.0)(oxlint@1.87.0)':
+  '@syntopica/quality-config@0.13.2(@commitlint/config-conventional@21.2.3)(@typescript/typescript6@6.0.2)(dependency-cruiser@18.5.0)(knip@6.41.0)(oxlint@1.87.0)':
     dependencies:
       typescript: '@typescript/typescript6@6.0.2'
     optionalDependencies:
