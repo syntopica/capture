@@ -32,62 +32,29 @@ verified complete - `[-]` obsolete or superseded.
       99.01%. The 8 left are `as` casts, and the margin is one cast: the next
       `as` in `src/` drops the gate below 99.
 
-## Gates red on `main` before this branch
-
-- [ ] **`pnpm type-check` fails with TS4111 in four files that never changed.**
-      `@busirocket/tsconfig` 0.3.0 sets `noPropertyAccessFromIndexSignature`, so
-      every `process.env.X` in `src/db/capturePool.ts`,
-      `src/utils/captures/clipsRepositoryUrl.ts` and the two integration tests
-      must become `process.env['X']`. Nine errors, verified on a clean archive
-      of HEAD on 2026-09-08. `check:ci` runs `type-check` first, so CI is red
-      until this lands.
-- [ ] **`pnpm knip` fails: `gitleaks` is an unlisted binary and
-      `@commitlint/cli` an unused devDependency.** Verified on a clean archive
-      of HEAD on 2026-09-08. `secrets:check` calls `gitleaks` without a package
-      that provides it; either list it under `ignoreBinaries` in
-      `knip.config.ts` with the reason, or install it as a dependency.
-      `dependency-cruiser` can also leave `ignoreDependencies`, per knip's own
-      hint.
-
 ## Daily round
 
 Filed by `~/p/bin/daily`; one bullet per finding, updated in place while it
 repeats.
 
-## Shared package scope migration (2026-09-14)
-
-- [ ] After the owner publishes the renamed shared packages, regenerate the
-      lockfile and run the existing repository quality gate. Source references
-      now use the new scope; the lockfile is intentionally unchanged because the
-      packages are not available offline.
-
 ## Clip links after the inbox hand-over (2026-09-16)
 
-- [ ] `clipUrl` composes `CLIPS_REPOSITORY_URL/tree/main/<clip_dir>`, which
-      pointed at the clip while `<owner>/<clips-repo>` was the archive. Since
-      2026-09-16 that repository is only the clipper's inbox: `clips pull`
-      copies each pending clip into the private wiki at `clips/<clip_dir>` and
-      removes it from the inbox, so the `/have` link 404s once a clip has been
-      handed over. The wiki is private, so a public link cannot reach it either.
-      Smallest step: make `clip_url` null (or point it at the inbox commit that
-      introduced the clip, which stays reachable in history) and let the
-      extension show `state` alone; the clipper's `fetch-clip-status` already
-      tolerates a null `clip_url`.
-
-## Desktop clip state mirroring (2026-09-30)
-
-- [ ] `POST /api/capture` returns 500 for desktop clips: every `clips ingest` of
-      the 2026-09-30 X-tab clips logged
-      `could not mirror needs-claude|ingested for https://x.com/trq212/status/2101009392611278961: recording ... returned 500`
-      (clip 01M3QXGJ, both routing and publish). Non-fatal - the ingest still
-      publishes - but the service never learns those clips exist, so `/have`
-      answers wrong for them. Next step: read the service log for that request
-      and reproduce with one `curl` POST of that URL.
-
-## Health dashboard
-
-- [ ] `oldestAt` from `GET /api/captures/count` is `MIN(captured_at)` over the
-      client's string with its offset intact, so mixed offsets (`+02:00` vs `Z`)
-      sort lexically, not chronologically, and the reported oldest can be wrong
-      by up to the offset spread. Smallest step: store a normalised UTC column
-      (or select the row whose parsed instant is smallest) and return it in UTC.
+- [!] `clipUrl` composes `CLIPS_REPOSITORY_URL/tree/main/<clip_dir>`, which
+  pointed at the clip while `<owner>/<clips-repo>` was the archive. Since
+  2026-09-16 that repository is only the clipper's inbox: `clips pull` copies
+  each pending clip into the private wiki at `clips/<clip_dir>` and removes it
+  from the inbox, so the `/have` link 404s once a clip has been handed over. The
+  wiki is private, so a public link cannot reach it either. Smallest step: make
+  `clip_url` null (or point it at the inbox commit that introduced the clip,
+  which stays reachable in history) and let the extension show `state` alone;
+  the clipper's `fetch-clip-status` already tolerates a null `clip_url`.
+  2026-10-11: still live - `GET /api/have` for an ingested Medium clip returns a
+  `<clips-repo>/tree/main/clips/needs-claude/...` link. Decided (Codex, high):
+  keep the code, which already answers `clip_url: null` when
+  `CLIPS_REPOSITORY_URL` is unset, because another operator of this engine may
+  keep clips in a repository; the fix is the owner's production config.
+  **Blocked on an owner ops action outside a normal deploy:** on the production
+  host, remove the `CLIPS_REPOSITORY_URL=` line from the app's server `.env`,
+  restart the app (the restart call is in the private wiki's capture-service
+  access notes), then check that `GET /api/have?url=<an ingested clip>` answers
+  `"clip_url":null`.
