@@ -2,6 +2,8 @@
 
 Closed work, newest first, grouped by year and month.
 
+<!-- tadu:log v1 since 2026-10-12 -->
+
 ## 2026
 
 ### 2026-10
@@ -74,3 +76,32 @@ Closed work, newest first, grouped by year and month.
   `countUndrainedCaptures` integration test against MariaDB 11.4, which asserts
   `2000-01-01T22:30:00.000Z` for `Z`/`+02:00` probes where `MIN` would return
   the later `Z` string.
+
+#### Moved from TODO.md (2026-10-12)
+
+- [x] **Baseline gate debt:** The coverage gate observed after the 2026-09-14
+      directory move was the vitest 4 to 5 major bump in `e63c837`, not the move
+      and not lost tests. The accounting changed under fixed thresholds: totals
+      went from 87 to 86 lines and 96 to 95 statements, with the covered counts
+      dropping in step, which is why both metrics missed by about a fifth of a
+      point. `capturePool.ts` is the only source file touched since the ratchet
+      was written and it still has 44 lines, differing only in bracket notation.
+      Thresholds re-baselined to 80.23 and 77.89 with the reason recorded in
+      `vitest.config.mts`; `autoUpdate` raises but never lowers, so a provider
+      change has to be re-recorded by hand. `pnpm run check` exits 0.
+
+- [x] **Baseline gate debt:** **Cobertura de tipos al 96.93%, el liston
+      compartido es 99%.** `dupes`, `knip` y `deps:graph` pasaron limpios; este
+      es el unico gate que no llega. 25 expresiones sin cubrir, 18 de ellas en
+      `src/services/captures/captureFromRow.ts` -- un mapper de filas de base de
+      datos, o sea un borde real con el driver, no dejadez. `type-coverage`
+      corre con `--at-least 96.9`, que congela el estado actual: la cobertura ya
+      no puede bajar, y el numero en `package.json` es la deuda, visible en
+      cualquier diff que lo toque. Tipar la fila en `captureFromRow.ts` es lo
+      que sube el numero; al hacerlo, subir tambien el `--at-least` y borrar
+      esta entrada cuando llegue a 99. Done 2026-09-08:
+      `src/types/captures/CaptureRow.ts` names the columns from `schema.sql`,
+      `captureFromRow` and both queries use it, and the `--at-least` override is
+      gone so the shared 99% bar enforces. `pnpm type-coverage`: 805 / 813,
+      99.01%. The 8 left are `as` casts, and the margin is one cast: the next
+      `as` in `src/` drops the gate below 99.
