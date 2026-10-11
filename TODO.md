@@ -32,6 +32,28 @@ verified complete - `[-]` obsolete or superseded.
       99.01%. The 8 left are `as` casts, and the margin is one cast: the next
       `as` in `src/` drops the gate below 99.
 
+## Gate debt (2026-10-11)
+
+- [!] `pnpm check:security` (CI job "secrets + advisories + workflows") fails
+  `audit:check` on GHSA-vfj7-8cjw-p6xm, braces <=3.0.3 stack exhaustion, reached
+  only through `@next/eslint-plugin-next>fast-glob>micromatch` at lint time. No
+  fixed braces version is published (latest 3.0.3, advisory lists no patched
+  version), so no override can fix it and the gate was red on `main` before this
+  pass too. Unblocks when braces or micromatch ships a fix: then add
+  `'braces@<3.0.4': '^3.0.4'` under `overrides` in `pnpm-workspace.yaml` and
+  re-run `pnpm audit:check`.
+- [ ] Drop `ignoreDependencies: ['type-coverage']` from `knip.config.ts` once
+      `@syntopica/quality-config` releases its fix for reading the
+      `type-coverage` script name as the binary (unreleased in the codeality
+      repo on 2026-10-11). Check: `pnpm knip` prints
+      `type-coverage ... Remove from ignoreDependencies`.
+- [!] Deploy of `c47a916` (UTC `oldestAt`) and the `330f942` upgrade is pending:
+  the documented deploy is allowed only with the full gate green, and
+  `check:security` is red on the braces advisory above. Command:
+  `pnpm     build:cpanel`, then the rsync and restart in the private wiki's
+  capture-service notes; record the pre-deploy tarball as the rollback.
+  Production runs the 2026-10-03 build (`18bc65c`) meanwhile.
+
 ## Daily round
 
 Filed by `~/p/bin/daily`; one bullet per finding, updated in place while it

@@ -36,11 +36,13 @@ import { createKnipConfig } from '@syntopica/quality-config/knip'
  * one on the developer's PATH. No package can provide it, so knip is told so
  * rather than left warning about an unlisted binary on every run.
  *
- * `type-coverage` is used, but only through `baseline-type-coverage`, which
- * runs it with `pnpm exec` from inside `@syntopica/quality-config`. Knip reads
- * the script as that bin and cannot follow the spawn, so since quality-config
- * 0.13 it reports the package as an unused devDependency. Removing it would
- * break `type-coverage` the script, so it is listed as used here.
+ * `type-coverage` is used, through `baseline-type-coverage`, which runs it
+ * with `pnpm exec`. quality-config 0.13.1 decides whether to ignore it by
+ * looking for the word in the scripts, and reads the script *name*
+ * `type-coverage` as the binary being called, so it stops ignoring it and knip
+ * reports the package unused. The fix is unreleased in quality-config; once a
+ * release carries it, this entry turns into a `Remove from
+ * ignoreDependencies` hint and should go.
  */
 export default Object.assign(
   createKnipConfig({
