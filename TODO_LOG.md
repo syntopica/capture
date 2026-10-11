@@ -6,6 +6,27 @@ Closed work, newest first, grouped by year and month.
 
 ### 2026-10
 
+- 2026-10-11 - Deployed `main` at `40a3419` (UTC `oldestAt`, the dependency
+  upgrade, the audit waiver) with the documented `pnpm build:cpanel` + rsync +
+  persistent-app restart. **Rollback point:** the previous production build was
+  `18bc65c` (2026-10-03); a full tarball of the app directory taken just before
+  the upload sits in root's home on the production host as
+  `brain-capture-backup-20261011.tar.gz` (the 2026-10-03 one is kept too). Smoke
+  test, read-only with a real token: `/api/captures/count` 200 (`count 0`), the
+  same call without a token 401, `/api/have` 200, `/api/captures?drained=false`
+  200; the server process restarted at the deploy time.
+- 2026-10-11 - Stale `/have` clip links: the code was kept (Codex, high), and
+  the production config was fixed instead. Owner decision relayed by the
+  coordinator. The server `.env` was backed up as `.env.bak-20261011`, its
+  `CLIPS_REPOSITORY_URL` line removed, the app restarted; `/have` for an
+  ingested clip now answers `"clip_url":null` with `state` and `clip_dir`
+  intact. Revert: restore the backup and restart.
+- 2026-10-11 - Clip 01M3QXGJ re-mirrored with the clips tooling's own `push`
+  (`tools/capture/push.py`, the per-row step of `push_index_to_service.py`):
+  `/have?url=https://x.com/trq212/status/2101009392611278961` now answers
+  `captured: true`, `state: ingested`, the processed `clip_dir`, `captured_at`
+  2026-09-30T01:05:24Z. The Python run needed `SSL_CERT_FILE`; filed in the
+  clips repo's TODO.
 - 2026-10-11 - `check:security` red on GHSA-vfj7-8cjw-p6xm (braces <=3.0.3, no
   patched release, lint-time only): `audit:check` now runs
   `baseline-audit --level high` from quality-config with an expiring waiver in

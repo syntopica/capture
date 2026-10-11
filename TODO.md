@@ -39,36 +39,8 @@ verified complete - `[-]` obsolete or superseded.
       `type-coverage` script name as the binary (unreleased in the codeality
       repo on 2026-10-11). Check: `pnpm knip` prints
       `type-coverage ... Remove from ignoreDependencies`.
-- [!] Deploy of `c47a916` (UTC `oldestAt`) and the `330f942` upgrade is pending:
-  the documented deploy is allowed only with the full gate green, and
-  `check:security` is red on the braces advisory above. Command:
-  `pnpm     build:cpanel`, then the rsync and restart in the private wiki's
-  capture-service notes; record the pre-deploy tarball as the rollback.
-  Production runs the 2026-10-03 build (`18bc65c`) meanwhile.
 
 ## Daily round
 
 Filed by `~/p/bin/daily`; one bullet per finding, updated in place while it
 repeats.
-
-## Clip links after the inbox hand-over (2026-09-16)
-
-- [!] `clipUrl` composes `CLIPS_REPOSITORY_URL/tree/main/<clip_dir>`, which
-  pointed at the clip while `<owner>/<clips-repo>` was the archive. Since
-  2026-09-16 that repository is only the clipper's inbox: `clips pull` copies
-  each pending clip into the private wiki at `clips/<clip_dir>` and removes it
-  from the inbox, so the `/have` link 404s once a clip has been handed over. The
-  wiki is private, so a public link cannot reach it either. Smallest step: make
-  `clip_url` null (or point it at the inbox commit that introduced the clip,
-  which stays reachable in history) and let the extension show `state` alone;
-  the clipper's `fetch-clip-status` already tolerates a null `clip_url`.
-  2026-10-11: still live - `GET /api/have` for an ingested Medium clip returns a
-  `<clips-repo>/tree/main/clips/needs-claude/...` link. Decided (Codex, high):
-  keep the code, which already answers `clip_url: null` when
-  `CLIPS_REPOSITORY_URL` is unset, because another operator of this engine may
-  keep clips in a repository; the fix is the owner's production config.
-  **Blocked on an owner ops action outside a normal deploy:** on the production
-  host, remove the `CLIPS_REPOSITORY_URL=` line from the app's server `.env`,
-  restart the app (the restart call is in the private wiki's capture-service
-  access notes), then check that `GET /api/have?url=<an ingested clip>` answers
-  `"clip_url":null`.
