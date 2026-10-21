@@ -1,3 +1,5 @@
+minimumReleaseAge: 1440
+blockExoticSubdeps: true
 # Next.js standalone output traces dependencies through a real node_modules
 # tree. With pnpm's default symlinked layout, transitive dependencies such as
 # @swc/helpers are not copied into .next/standalone and the deployed bundle
