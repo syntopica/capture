@@ -44,6 +44,9 @@ overrides:
   # GHSA-68fv-2mgg-jv7q, high: event-loop DoS on crafted source maps. Arrives
   # through vitest>vite>postcss, i.e. test time only.
   'source-map-js@<1.2.2': '^1.2.2'
+  # GHSA-587h-7wmj-h5pm: Vitest auto-installs Vite as a peer, so an ordinary
+  # transitive update leaves 8.2.0 locked. Stay on the patched 8.2 line.
+  vite: '~8.2.4'
 
 minimumReleaseAgeExclude:
   - '@syntopica/eslint-config@0.9.0'
