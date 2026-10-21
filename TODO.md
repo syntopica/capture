@@ -17,13 +17,18 @@ verified complete - `[-]` obsolete or superseded.
   rebuild an index, merge captures or mutate production rows automatically.
   Eight database integration cases remain unexecuted without a configured
   isolated database; production is not a test fixture.
-- [ ] **Review existing ESLint 10 peer compatibility warnings.**
-      `pnpm peers check` reports eslint-plugin-jsx-a11y 6.10.2,
-      eslint-plugin-react 7.37.5 and eslint-plugin-import 2.32.0 declaring
-      support only through ESLint 9 while 10.12.0 is installed. Current lint
-      passes; investigate upstream-compatible releases before changing the
-      stack. Do not suppress the warning or downgrade dependencies as part of
-      the URL/security repair.
+- [!] **Review existing ESLint 10 peer compatibility warnings.**
+  `pnpm peers check` reports eslint-plugin-jsx-a11y 6.10.2, eslint-plugin-react
+  7.37.5 and eslint-plugin-import 2.32.0 declaring support only through ESLint 9
+  while 10.12.0 is installed. Current lint passes; investigate
+  upstream-compatible releases before changing the stack. Do not suppress the
+  warning or downgrade dependencies as part of the URL/security repair.
+
+  - Registry verification 2026-10-21:
+    `pnpm view <plugin> version peerDependencies --json` confirms 6.10.2, 7.37.5
+    and 2.32.0 are still the latest releases and their declared ranges exclude
+    ESLint 10. Blocked on upstream releases with compatible peer declarations;
+    current lint remains green.
 
 ## Daily round
 
