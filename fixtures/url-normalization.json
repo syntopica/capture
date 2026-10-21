@@ -1,0 +1,92 @@
+[
+  {
+    "name": "strip tracking",
+    "input": "https://example.com/Post/?utm_source=test",
+    "expected": "https://example.com/post"
+  },
+  {
+    "name": "strip fragment",
+    "input": "https://example.com/a#section",
+    "expected": "https://example.com/a"
+  },
+  {
+    "name": "strip repeated slash",
+    "input": "https://EXAMPLE.com/A///",
+    "expected": "https://example.com/a"
+  },
+  {
+    "name": "preserve video identity",
+    "input": "https://www.youtube.com/watch?v=AbC",
+    "expected": "https://www.youtube.com/watch?v=AbC"
+  },
+  {
+    "name": "drop beside identity",
+    "input": "https://youtube.com/watch?t=42&v=AbC&si=test",
+    "expected": "https://youtube.com/watch?v=AbC"
+  },
+  {
+    "name": "mobile identity",
+    "input": "https://m.youtube.com/watch?v=AbC",
+    "expected": "https://m.youtube.com/watch?v=AbC"
+  },
+  {
+    "name": "missing identity",
+    "input": "https://www.youtube.com/watch?list=test",
+    "expected": "https://www.youtube.com/watch"
+  },
+  {
+    "name": "empty identity",
+    "input": "https://www.youtube.com/watch?v=",
+    "expected": "https://www.youtube.com/watch"
+  },
+  {
+    "name": "bare identity",
+    "input": "https://youtube.com/watch?v",
+    "expected": "https://youtube.com/watch"
+  },
+  {
+    "name": "all empty repeated identities",
+    "input": "https://m.youtube.com/watch?v=&v=",
+    "expected": "https://m.youtube.com/watch"
+  },
+  {
+    "name": "empty before nonempty identity",
+    "input": "https://www.youtube.com/watch?v=&v=AbC",
+    "expected": "https://www.youtube.com/watch?v=AbC"
+  },
+  {
+    "name": "bare before nonempty identity",
+    "input": "https://youtube.com/watch?v&v=AbC",
+    "expected": "https://youtube.com/watch?v=AbC"
+  },
+  {
+    "name": "nonempty before empty identity",
+    "input": "https://youtube.com/watch?v=AbC&v=",
+    "expected": "https://youtube.com/watch?v=AbC"
+  },
+  {
+    "name": "first nonempty repeated identity",
+    "input": "https://youtube.com/watch?v=AbC&v=DeF",
+    "expected": "https://youtube.com/watch?v=AbC"
+  },
+  {
+    "name": "decode identity",
+    "input": "https://youtube.com/watch?v=A%2BB%26C",
+    "expected": "https://youtube.com/watch?v=A+B&C"
+  },
+  {
+    "name": "space identity remains nonempty",
+    "input": "https://youtube.com/watch?v=+",
+    "expected": "https://youtube.com/watch?v= "
+  },
+  {
+    "name": "short link path convention",
+    "input": "https://youtu.be/AbC?si=test",
+    "expected": "https://youtu.be/abc"
+  },
+  {
+    "name": "fragment before query is ignored",
+    "input": "https://youtube.com/watch#fragment?v=AbC",
+    "expected": "https://youtube.com/watch"
+  }
+]

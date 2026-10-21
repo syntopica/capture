@@ -105,3 +105,36 @@ Closed work, newest first, grouped by year and month.
       gone so the shared 99% bar enforces. `pnpm type-coverage`: 805 / 813,
       99.01%. The 8 left are `as` casts, and the margin is one cast: the next
       `as` in `src/` drops the gate below 99.
+
+- [x] 2026-10-21 — **Gate debt (2026-10-11):** **Resolve the vulnerable Vite
+      peer used by Vitest.** Security gate reproduced GHSA-587h-7wmj-h5pm at
+      Vite 8.2.0. An ordinary transitive update retained the auto-installed
+      peer; the targeted Vite 8.2 override selects patched 8.2.4. Preserve
+      release-age and build policies, verify the full gate and security audit,
+      and retain the pre-existing braces waiver unchanged.
+  - Result: Pinned the Vitest auto-installed Vite peer to the patched 8.2 range
+    in the existing override policy and regenerated the lockfile without
+    changing the release-age or build policies. The ordinary transitive update
+    alone had retained 8.2.0.
+  - Evidence: pnpm why vite resolves only 8.2.4; pnpm check:security now exits 0
+    with zero unwaived findings and the existing braces waiver unchanged. env -u
+    DB_NAME pnpm check passes 59 tests, with 8 database integration cases
+    skipped; type checking, lint, format, duplicate and dead-code checks pass.
+
+- [x] 2026-10-21 — **Gate debt (2026-10-11):** **Align blank identity-query
+      normalization with the canonical Python index.** The service used an empty
+      first `v` value while the Python index discards blank query values before
+      choosing the first nonempty one. The shared fixture covers blank,
+      repeated, decoded and case-sensitive identity values. Verify the service
+      suite and the workspace cross-language contract before closing; no index
+      rebuild or deployment is part of this source repair.
+  - Result: TypeScript now discards blank identity values before choosing the
+    first nonempty value, matching the unchanged Python index. One versioned
+    fixture is consumed by the standalone TypeScript suite and the optional
+    workspace verifier. Stored-row reconciliation and deployment remain
+    separately blocked; no index or production row was changed.
+  - Evidence: Five shared-contract regressions failed before the fix; python3
+    ../bin/check-capture-url-parity.py then passed all 18 canonical Python cases
+    and all 30 TypeScript URL cases. env -u DB_NAME pnpm check passes 59 tests,
+    with 8 database integration cases skipped. Independent read-only review
+    returned no findings.

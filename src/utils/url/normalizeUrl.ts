@@ -1,10 +1,11 @@
+import { firstNonemptyQueryValue } from './firstNonemptyQueryValue'
 import { IDENTITY_QUERY_PARAMS } from './identityQueryParams'
 
 /** The article's identity: host plus path, with the parts that make one article
  * look like two removed.
  *
  * This is a deliberate port of `normalize()` in
- * `~/p/wiki/tools/capture/url_index.py`, and it must stay byte-identical to
+ * `tools/capture/capture_url_index_normalize.py` in the clips repository, and it must stay byte-identical to
  * it. The two read the same question - "do we already have this?" - from two
  * stores, and an index answering a different question than the one it was built
  * from is worse than no index at all. The Python is:
@@ -39,7 +40,10 @@ export const normalizeUrl = (url: string): string => {
   const keptNames = IDENTITY_QUERY_PARAMS[parsed.hostname.toLowerCase()]
   if (keptNames === undefined) return base
   const kept = keptNames
-    .map((name) => [name, parsed.searchParams.get(name)] as const)
+    .map(
+      (name) =>
+        [name, firstNonemptyQueryValue(parsed.searchParams, name)] as const,
+    )
     .filter((pair): pair is readonly [string, string] => pair[1] !== null)
     .map(([name, value]) => `${name}=${value}`)
   return kept.length === 0 ? base : `${base}?${kept.join('&')}`

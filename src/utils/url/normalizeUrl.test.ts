@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
+import contractCases from '../../../fixtures/url-normalization.json'
 import { normalizeUrl } from './normalizeUrl'
 
 /** These cases are the contract with `normalize()` in
- * `~/p/wiki/tools/capture/url_index.py`. If one of them changes, the 1484 rows
+ * `clips/tools/capture/capture_url_index_normalize.py`. If one of them changes, the 1484 rows
  * already keyed by the Python version stop matching what this service stores,
  * and the dedup question quietly starts returning the wrong answer. Change both
  * or neither. */
@@ -81,5 +82,11 @@ describe('identity-bearing query parameters', () => {
     expect(normalizeUrl('https://youtu.be/zmrPY6S1FwY')).toBe(
       'https://youtu.be/zmrpy6s1fwy',
     )
+  })
+})
+
+describe('shared Python URL identity contract', () => {
+  it.each(contractCases)('$name', ({ input, expected }) => {
+    expect(normalizeUrl(input)).toBe(expected)
   })
 })
