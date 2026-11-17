@@ -1,0 +1,25 @@
+{
+  "tadu": 2,
+  "id": "t-b7216838-a5e1-43b1-88d9-81b8c31df9f2",
+  "title": "The coverage gate observed after the 2026-09-14",
+  "state": "done",
+  "category": "baseline-gate-debt",
+  "type": "untriaged",
+  "priority": "untriaged",
+  "notes": [
+    "    directory move was the vitest 4 to 5 major bump in `e63c837`, not the move",
+    "    and not lost tests. The accounting changed under fixed thresholds: totals",
+    "    went from 87 to 86 lines and 96 to 95 statements, with the covered counts",
+    "    dropping in step, which is why both metrics missed by about a fifth of a",
+    "    point. `capturePool.ts` is the only source file touched since the ratchet",
+    "    was written and it still has 44 lines, differing only in bracket notation.",
+    "    Thresholds re-baselined to 80.23 and 77.89 with the reason recorded in",
+    "    `vitest.config.mts`; `autoUpdate` raises but never lowers, so a provider",
+    "    change has to be re-recorded by hand. `pnpm run check` exits 0."
+  ],
+  "closed": "2026-11-17",
+  "result": "The coverage gate observed after the 2026-09-14",
+  "evidence": [
+    "legacy item migrated to format 2 without a recorded evidence"
+  ]
+}

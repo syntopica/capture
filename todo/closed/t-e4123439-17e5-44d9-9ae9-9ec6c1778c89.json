@@ -1,0 +1,30 @@
+{
+  "tadu": 2,
+  "id": "t-e4123439-17e5-44d9-9ae9-9ec6c1778c89",
+  "title": "**Cobertura de tipos al 96.93%, el liston",
+  "state": "done",
+  "category": "baseline-gate-debt",
+  "type": "untriaged",
+  "priority": "untriaged",
+  "notes": [
+    "    compartido es 99%.** `dupes`, `knip` y `deps:graph` pasaron limpios; este",
+    "    es el unico gate que no llega. 25 expresiones sin cubrir, 18 de ellas en",
+    "    `src/services/captures/captureFromRow.ts` -- un mapper de filas de base de",
+    "    datos, o sea un borde real con el driver, no dejadez. `type-coverage`",
+    "    corre con `--at-least 96.9`, que congela el estado actual: la cobertura ya",
+    "    no puede bajar, y el numero en `package.json` es la deuda, visible en",
+    "    cualquier diff que lo toque. Tipar la fila en `captureFromRow.ts` es lo",
+    "    que sube el numero; al hacerlo, subir tambien el `--at-least` y borrar",
+    "    esta entrada cuando llegue a 99. Done 2026-09-08:",
+    "    `src/types/captures/CaptureRow.ts` names the columns from `schema.sql`,",
+    "    `captureFromRow` and both queries use it, and the `--at-least` override is",
+    "    gone so the shared 99% bar enforces. `pnpm type-coverage`: 805 / 813,",
+    "    99.01%. The 8 left are `as` casts, and the margin is one cast: the next",
+    "    `as` in `src/` drops the gate below 99."
+  ],
+  "closed": "2026-11-17",
+  "result": "**Cobertura de tipos al 96.93%, el liston",
+  "evidence": [
+    "legacy item migrated to format 2 without a recorded evidence"
+  ]
+}

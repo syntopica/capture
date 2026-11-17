@@ -1,0 +1,22 @@
+{
+  "tadu": 2,
+  "id": "t-bcb45427-2910-497a-b21e-1f528eda0ff6",
+  "title": "**Align blank identity-query",
+  "state": "done",
+  "category": "gate-debt-2026-10-11",
+  "type": "untriaged",
+  "priority": "untriaged",
+  "notes": [
+    "    normalization with the canonical Python index.** The service used an empty",
+    "    first `v` value while the Python index discards blank query values before",
+    "    choosing the first nonempty one. The shared fixture covers blank,",
+    "    repeated, decoded and case-sensitive identity values. Verify the service",
+    "    suite and the workspace cross-language contract before closing; no index",
+    "    rebuild or deployment is part of this source repair."
+  ],
+  "closed": "2026-10-21",
+  "result": "TypeScript now discards blank identity values before choosing the first nonempty value, matching the unchanged Python index. One versioned fixture is consumed by the standalone TypeScript suite and the optional workspace verifier. Stored-row reconciliation and deployment remain separately blocked; no index or production row was changed.",
+  "evidence": [
+    "Five shared-contract regressions failed before the fix; python3 ../bin/check-capture-url-parity.py then passed all 18 canonical Python cases and all 30 TypeScript URL cases. env -u DB_NAME pnpm check passes 59 tests, with 8 database integration cases skipped. Independent read-only review returned no findings."
+  ]
+}

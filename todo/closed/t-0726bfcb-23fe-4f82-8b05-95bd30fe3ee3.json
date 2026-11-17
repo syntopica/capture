@@ -1,0 +1,21 @@
+{
+  "tadu": 2,
+  "id": "t-0726bfcb-23fe-4f82-8b05-95bd30fe3ee3",
+  "title": "**Resolve the vulnerable Vite",
+  "state": "done",
+  "category": "gate-debt-2026-10-11",
+  "type": "untriaged",
+  "priority": "untriaged",
+  "notes": [
+    "    peer used by Vitest.** Security gate reproduced GHSA-587h-7wmj-h5pm at",
+    "    Vite 8.2.0. An ordinary transitive update retained the auto-installed",
+    "    peer; the targeted Vite 8.2 override selects patched 8.2.4. Preserve",
+    "    release-age and build policies, verify the full gate and security audit,",
+    "    and retain the pre-existing braces waiver unchanged."
+  ],
+  "closed": "2026-10-21",
+  "result": "Pinned the Vitest auto-installed Vite peer to the patched 8.2 range in the existing override policy and regenerated the lockfile without changing the release-age or build policies. The ordinary transitive update alone had retained 8.2.0.",
+  "evidence": [
+    "pnpm why vite resolves only 8.2.4; pnpm check:security now exits 0 with zero unwaived findings and the existing braces waiver unchanged. env -u DB_NAME pnpm check passes 59 tests, with 8 database integration cases skipped; type checking, lint, format, duplicate and dead-code checks pass."
+  ]
+}

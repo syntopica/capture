@@ -1,0 +1,10 @@
+{
+  "tadu": 2,
+  "id": "t-b372bc39-ddbf-43cf-b07a-fd007197e863",
+  "title": "**Reconcile historical normalized keys before deploying the blank-query",
+  "state": "blocked",
+  "category": "gate-debt-2026-10-11",
+  "type": "untriaged",
+  "priority": "untriaged",
+  "blocker": "fix.** Existing service rows with blank or bare identity parameters, including a blank value before a nonempty repeated value, may carry a different key than the Python index. A read-only audit on 2026-10-21 using the existing application pool and local environment was rejected with ER_ACCESS_DENIED_ERROR before any rows were read; no credentials were changed or printed. Blocked on a working supported read-only database connection. Then count affected rows and potential collisions, and design a recoverable re-key if needed. Do not infer stored-data parity from the 18 synthetic cases, rebuild an index, merge captures or mutate production rows automatically. Eight database integration cases remain unexecuted without a configured isolated database; production is not a test fixture."
+}
