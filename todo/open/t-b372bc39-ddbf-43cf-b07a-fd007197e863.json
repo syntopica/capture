@@ -1,10 +1,14 @@
 {
   "tadu": 2,
   "id": "t-b372bc39-ddbf-43cf-b07a-fd007197e863",
-  "title": "**Reconcile historical normalized keys before deploying the blank-query",
+  "title": "Audit stored normalized keys against the blank-query fix (needs working read-only DB access), then re-key if collisions exist",
   "state": "blocked",
   "category": "gate-debt-2026-10-11",
-  "type": "untriaged",
-  "priority": "untriaged",
-  "blocker": "fix.** Existing service rows with blank or bare identity parameters, including a blank value before a nonempty repeated value, may carry a different key than the Python index. A read-only audit on 2026-10-21 using the existing application pool and local environment was rejected with ER_ACCESS_DENIED_ERROR before any rows were read; no credentials were changed or printed. Blocked on a working supported read-only database connection. Then count affected rows and potential collisions, and design a recoverable re-key if needed. Do not infer stored-data parity from the 18 synthetic cases, rebuild an index, merge captures or mutate production rows automatically. Eight database integration cases remain unexecuted without a configured isolated database; production is not a test fixture."
+  "type": "chore",
+  "priority": "normal",
+  "kind": "waiting",
+  "blocker": "Needs a working supported read-only DB connection; 2026-10-21 attempt got ER_ACCESS_DENIED_ERROR",
+  "notes": [
+    "2026-11-24 audit: code fix landed in 0738b89 (2026-10-21, src/utils/url/normalizeUrl.ts + fixtures/url-normalization.json); no later commit touches stored keys, no audit script or re-key migration exists in migrations/. Left: get a working read-only DB credential (owner), count rows with blank/bare identity params and potential key collisions, design a recoverable re-key only if needed, and do not deploy the fix before that. Do not rebuild indexes, merge captures or mutate production rows automatically. Deploy status not verifiable from repo."
+  ]
 }
