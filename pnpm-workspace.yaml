@@ -49,7 +49,7 @@ overrides:
   vite: '~8.2.4'
 
 minimumReleaseAgeExclude:
-  - '@syntopica/eslint-config@0.9.0'
-  - eslint-plugin-code-policy@0.8.0
-  - '@syntopica/quality-config@0.13.2'
+  - '@syntopica/eslint-config@0.9.0 || 0.10.1'
+  - eslint-plugin-code-policy@0.8.0 || 0.9.1
+  - '@syntopica/quality-config@0.13.2 || 0.16.0'
   - '@syntopica/prettier-config@0.3.0'

@@ -1,3 +1,7 @@
 cpanel-build/
 .next/
 pnpm-lock.yaml
+
+# Task records use the canonical JSON written by tadu.
+/todo/open/*.json
+/todo/closed/*.json
